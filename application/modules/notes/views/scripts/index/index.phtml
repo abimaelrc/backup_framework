@@ -1,0 +1,40 @@
+<?php
+$this->headScript()
+     ->appendScript( '$(function(){
+	   $( "#notes" ).focus();
+	 });' );
+?>
+<h2>Notas</h2>
+<div class="divEntireWidth">
+	<img src="/images/document-edit.png" />
+	<div class="title">Añadir notas:</div>
+</div>
+<div class="form"><?php echo $this->form; ?></div>
+<div class="divEntireWidth marginTop10px">
+	<img src="/images/chat.png" />
+	<div class="title">Notas:</div>
+</div>
+<div id="config-notes">
+<?php if(!empty($this->notes['content'])): ?>
+	<div class="notes-content">
+		<?php echo nl2br($this->escape($this->notes['content'])); ?>
+	</div>
+	<div class="notes-bottom">
+		<span class="time">
+			<i></i>
+			<?php echo $this->escape($this->notes['created_datetime']); ?>
+		</span>
+		<span class="created-by">
+			<i></i>
+			<?php echo $this->escape($this->notes['name']); ?>
+		</span>
+		<span class="delete">
+			<a href="#" title="Desactivar notas" onclick="confirmInactiveNotes(); return false;">
+				Desactivar
+			</a>
+		</span>
+	</div>
+<?php else: ?>
+	<div class="empty">No hay notas</div>
+<?php endif; ?>
+</div>

@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<config>
+	<nav>
+		<mainNav>
+			<label>main nav</label>
+			<uri>#</uri>
+			<pages>
+				<home>
+					<label>Inicio</label>
+					<uri>/default/index/index</uri>
+					<title>Inicio</title>
+					<resource>default:index:index</resource>
+				</home>
+				<notes>
+					<label>Notas</label>
+					<uri>/notes/index/index</uri>
+					<title>Notas</title>
+					<resource>notes:index:index</resource>
+				</notes>
+				<configUsers>
+					<label>Añadir Usuario</label>
+					<uri>/configure/users/index</uri>
+					<title>Añadir Usuarios</title>
+					<resource>configure:users:index</resource>
+				</configUsers>
+				<users>
+					<label>Usuarios</label>
+					<uri>/configure/edit/index</uri>
+					<title>Editar Usuarios</title>
+					<resource>configure:edit:index</resource>
+				</users>
+				<statistics>
+					<label>Estadísticas</label>
+					<uri>/statistics/index/index</uri>
+					<title>Estadísticas</title>
+					<resource>statistics:index:index</resource>
+				</statistics>
+				<configMyAccount>
+					<label>Mi Cuenta</label>
+					<uri>/configure/index/index</uri>
+					<title>Editar mi cuenta</title>
+					<resource>configure:index:index</resource>
+				</configMyAccount>
+				<logout>
+					<label>Logout</label>
+					<uri>/authentication/index/logout</uri>
+					<title>Desloguearse</title>
+					<resource>authentication:index:logout</resource>
+				</logout>
+			</pages>
+		</mainNav>
+	</nav>
+</config>
