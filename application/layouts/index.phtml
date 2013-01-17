@@ -62,10 +62,10 @@
 			<?php $mainNav = $this->navigation()->findOneByLabel('main nav'); ?>
 			<?php echo $this->navigation()->menu()->renderMenu($mainNav); ?>
 
-			<div id="logout"><a href="<?php echo $this->url(array(), "logout"); ?>"><img src="/images/iconClose.png" /></a></div>
+			<div id="logout"><a href="<?php echo $this->url(array(), "logout"); ?>"><img src="/images/iconClose.png" title="Salir" /></a></div>
 
 			<div class="settings">
-				<img src="/images/setting_normal.png" />
+				<img src="/images/setting_normal.png" title="Configuración" />
 				<?php $settingNav = $this->navigation()->findOneByLabel('settings nav'); ?>
 				<div id="settings-info">
 					<?php echo $this->navigation()->menu()->renderMenu($settingNav); ?>
