@@ -11,6 +11,7 @@ class Qry_Queries
 	{
 		$this->_db 		 = Db_Db::conn();
 		$this->_auth 	 = Zend_Auth::getInstance();
+		$this->_auth->setStorage(Extras_Session::storageNamespace());
 		$this->_userInfo = $this->getUserInfo();
 	}
 

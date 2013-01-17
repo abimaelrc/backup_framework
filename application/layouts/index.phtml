@@ -2,6 +2,10 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-US">
 <head>
 <?php
+	$request = Zend_Controller_Front::getInstance()->getRequest();
+	$url     = '/' . $request->getModuleName()
+	         . '/' . $request->getControllerName()
+	         . '/' . $request->getActionName();
 	echo $this->headTitle();
 	echo $this->headMeta();
 	echo $this->headLink( array( 'rel' => 'favicon',
@@ -16,7 +20,39 @@
 			  ->prependFile('/js/jquery/jquery.ui.widget.min.js')
 			  ->prependFile('/js/jquery/jquery.ui.effect.min.js')
 			  ->prependFile('/js/jquery/jquery.ui.core.min.js')
-			  ->prependFile('/js/jquery/jquery-1.8.2.js');
+			  ->prependFile('/js/jquery/jquery-1.8.2.js')
+			  ->appendScript('$(function(){
+					if( "' . $url . '" != "' . $this->url(array(), "configure") . '" ){
+						$( ".name-user" )
+							.mouseover(function(){
+								$( this ).addClass( "name-user-hover" );
+							})
+							.mouseout(function(){
+								$( this ).removeClass( "name-user-hover" );
+							});
+					}
+					$( ".settings" )
+						.mouseover(function(){
+							$( this ).find( "img" ).attr({ src: "/images/setting_selected.png" });
+							$( this ).addClass( "settings-hover" );
+						})
+						.mouseout(function(){
+							$( this ).find( "img" ).attr({ src: "/images/setting_normal.png" });
+							$( this ).removeClass( "settings-hover" );
+						})
+						.click(function(){
+							$( this ).find( "#settings-info" ).toggle();
+						});
+					$( "#logout" )
+						.mouseover(function(){
+							$( this ).find( "img" ).attr({ src: "/images/iconClose_selected.png" });
+							$( this ).addClass( "logout-hover" );
+						})
+						.mouseout(function(){
+							$( this ).find( "img" ).attr({ src: "/images/iconClose.png" });
+							$( this ).removeClass( "logout-hover" );
+						});
+			  });');
 ?>
 </head>
 <body>
@@ -25,7 +61,21 @@
 		<div id="menu">
 			<?php $mainNav = $this->navigation()->findOneByLabel('main nav'); ?>
 			<?php echo $this->navigation()->menu()->renderMenu($mainNav); ?>
-			<div class="name-user"><?php echo Zend_Auth::getInstance()->getStorage()->read()->name; ?></div>
+
+			<div id="logout"><a href="<?php echo $this->url(array(), "logout"); ?>"><img src="/images/iconClose.png" /></a></div>
+
+			<div class="settings">
+				<img src="/images/setting_normal.png" />
+				<?php $settingNav = $this->navigation()->findOneByLabel('settings nav'); ?>
+				<div id="settings-info">
+					<?php echo $this->navigation()->menu()->renderMenu($settingNav); ?>
+					<div class="clear"></div>
+				</div>
+			</div>
+
+			<div class="name-user <?php echo ( $url == $this->url(array(), "configure") ) ? "name-user-hover" : ""; ?>">
+				<a href="/configure"><?php echo Zend_Auth::getInstance()->getStorage()->read()->name; ?></a>
+			</div>
 			<div class="clear"></div>
 		</div>
 	</div>

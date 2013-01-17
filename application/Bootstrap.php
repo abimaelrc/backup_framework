@@ -4,6 +4,11 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
 	protected function _initSession()
 	{
 		Zend_Session::start();
+
+		/**
+		 * Setting up timeout, default 3600 ( 1 hour )
+		 */
+		Extras_Session::sessionNamespace();
 	}
 
 

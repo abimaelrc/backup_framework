@@ -11,12 +11,25 @@
 					<title>Inicio</title>
 					<resource>default:index:index</resource>
 				</home>
+			</pages>
+		</mainNav>
+
+		<settings>
+			<label>settings nav</label>
+			<uri>#</uri>
+			<pages>
 				<notes>
 					<label>Notas</label>
 					<uri>/notes/index/index</uri>
 					<title>Notas</title>
 					<resource>notes:index:index</resource>
 				</notes>
+				<statistics>
+					<label>Estadísticas</label>
+					<uri>/statistics/index/index</uri>
+					<title>Estadísticas</title>
+					<resource>statistics:index:index</resource>
+				</statistics>
 				<configUsers>
 					<label>Añadir Usuario</label>
 					<uri>/configure/users/index</uri>
@@ -29,25 +42,7 @@
 					<title>Editar Usuarios</title>
 					<resource>configure:edit:index</resource>
 				</users>
-				<statistics>
-					<label>Estadísticas</label>
-					<uri>/statistics/index/index</uri>
-					<title>Estadísticas</title>
-					<resource>statistics:index:index</resource>
-				</statistics>
-				<configMyAccount>
-					<label>Mi Cuenta</label>
-					<uri>/configure/index/index</uri>
-					<title>Editar mi cuenta</title>
-					<resource>configure:index:index</resource>
-				</configMyAccount>
-				<logout>
-					<label>Logout</label>
-					<uri>/authentication/index/logout</uri>
-					<title>Desloguearse</title>
-					<resource>authentication:index:logout</resource>
-				</logout>
 			</pages>
-		</mainNav>
+		</settings>
 	</nav>
 </config>

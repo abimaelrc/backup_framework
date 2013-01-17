@@ -102,14 +102,12 @@ a{ text-decoration: none; }
  * 								menu
  **************************/
 #menu{
-	position: relative;
 	width: 960px;
 	margin: 0 auto;
 	background-color: #627aad;
 	border-top: 1px solid #1d4088;
 	border-left: 1px solid #1d4088;
 	border-right: 1px solid #1d4088;
-	z-index: 1000;
 }
 #menu ul.navigation li{
 	float: left;
@@ -128,53 +126,10 @@ a{ text-decoration: none; }
 	position: relative;
 	float: right;
 	padding: 5px;
+	right: 10px;
+	color: #ffffff;
 	font-weight: bold;
-	right: 4px;
 }
-#menu .name-user-hover{ background-color: #6d86b7; }
-#menu .name-user a{ color: #ffffff; }
-#menu .settings,
-	#menu #logout{
-	text-align: center;
-	position: relative;
-	float: right;
-	height: 30px;
-	width: 25px;
-	right: 2px;
-	cursor: pointer;
-}
-#menu .settings img{
-	position: relative;
-	width: 15px;
-	height: 15px;
-	top: 7px;
-}
-#menu #logout img{
-	position: relative;
-	width: 14px;
-	height: 12px;
-	top: 9px;
-}
-#menu .settings-hover,
-	#menu .logout-hover{ background-color: #6d86b7; }
-#menu .settings #settings-info{
-	display: none;
-	position: relative;
-	width: 120px;
-	border: 1px solid #1d4088;
-	border-top: none;
-	background-color: #ffffff;
-	right: 96px;
-	top: 15px;
-	cursor: default;
-}
-#menu .settings #settings-info ul.navigation li{
-	width: 100%;
-	display: block;
-	background-color: #627aad;
-}
-#menu .settings #settings-info ul.navigation li:hover,
-	#menu .settings #settings-info ul.navigation li.active{ background-color: #6d86b7; }
 
 
 
