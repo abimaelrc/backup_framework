@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Jan 21, 2013 at 11:51 AM
+-- Generation Time: Jan 21, 2013 at 11:56 AM
 -- Server version: 5.1.50
 -- PHP Version: 5.3.14
 
@@ -111,7 +111,7 @@ CREATE TABLE IF NOT EXISTS `users` (
   `num_empl` varchar(10) NOT NULL,
   `pwd` varchar(70) NOT NULL,
   `role` varchar(30) NOT NULL,
-  `access` varchar(250) DEFAULT NULL,
+  `access` varchar(250) DEFAULT NULL COMMENT 'json',
   `change_pwd` int(1) NOT NULL DEFAULT '1',
   `in_charge` int(11) unsigned DEFAULT NULL,
   `created_by` int(11) unsigned NOT NULL,
@@ -148,7 +148,8 @@ CREATE TABLE IF NOT EXISTS `users` (
   KEY `deleted_account` (`deleted_account`),
   KEY `deleted_by` (`deleted_by`),
   KEY `deleted_datetime` (`deleted_datetime`),
-  KEY `deleted_by_remote_addr` (`deleted_by_remote_addr`)
+  KEY `deleted_by_remote_addr` (`deleted_by_remote_addr`),
+  KEY `access` (`access`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
 
 --
