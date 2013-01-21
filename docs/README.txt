@@ -15,7 +15,7 @@ The following is a sample VHOST you might want to consider for your project.
 
 NameVirtualHost localhost:1234
 
-<VirtualHost localhost:8800>
+<VirtualHost localhost:1234>
     DocumentRoot "C:/test/public"
     ServerName localhost
     ServerAlias localhost
@@ -26,3 +26,9 @@ NameVirtualHost localhost:1234
 		Allow from all
 	</Directory>
 </VirtualHost>
+
+
+Login Info
+==========
+User: admin
+Pass: admin

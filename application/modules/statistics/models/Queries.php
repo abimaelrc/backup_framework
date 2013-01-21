@@ -166,6 +166,9 @@ class Statistics_Model_Queries extends Qry_Queries
 		 * Data for "Test 1"
 		 */
 		if( $values['type'] == 'test1' ){
+			/**
+			 * Delete next line and fix the query, is just an example
+			 */
 			goto skip;
 
 			$dbQuery = 'SELECT * FROM table
@@ -186,6 +189,9 @@ class Statistics_Model_Queries extends Qry_Queries
 
 
 
+		/**
+		 * Delete next line
+		 */
 		skip:
 
 		return array( 'fileName' => $fileName, 'info' => $this->_setEncoding($info, 'ISO-8859-1//TRANSLIT'), );

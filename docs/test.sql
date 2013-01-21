@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Jan 02, 2013 at 03:58 PM
+-- Generation Time: Jan 21, 2013 at 11:51 AM
 -- Server version: 5.1.50
 -- PHP Version: 5.3.14
 
@@ -40,16 +40,12 @@ CREATE TABLE IF NOT EXISTS `notes` (
   KEY `created_datetime` (`created_datetime`),
   KEY `updated_by` (`updated_by`),
   KEY `updated_datetime` (`updated_datetime`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=4 ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 --
 -- Dumping data for table `notes`
 --
 
-INSERT INTO `notes` (`notes_id`, `content`, `active`, `created_by`, `created_datetime`, `updated_by`, `updated_datetime`) VALUES
-(1, 'asdfasdfasdfa sdfasdfasdf asfasf', 0, 1, '2013-01-02 15:41:05', 1, '2013-01-02 15:41:08'),
-(2, 'asdfasdfasfa', 0, 1, '2013-01-02 15:41:14', 1, '2013-01-02 15:41:17'),
-(3, 'asdfasdfasdfa', 0, 1, '2013-01-02 15:41:19', 1, '2013-01-02 15:41:24');
 
 -- --------------------------------------------------------
 
@@ -115,6 +111,7 @@ CREATE TABLE IF NOT EXISTS `users` (
   `num_empl` varchar(10) NOT NULL,
   `pwd` varchar(70) NOT NULL,
   `role` varchar(30) NOT NULL,
+  `access` varchar(250) DEFAULT NULL,
   `change_pwd` int(1) NOT NULL DEFAULT '1',
   `in_charge` int(11) unsigned DEFAULT NULL,
   `created_by` int(11) unsigned NOT NULL,
@@ -158,8 +155,8 @@ CREATE TABLE IF NOT EXISTS `users` (
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`users_id`, `name`, `num_empl`, `pwd`, `role`, `change_pwd`, `in_charge`, `created_by`, `created_datetime`, `created_by_remote_addr`, `block_access`, `block_by`, `block_datetime`, `block_by_remote_addr`, `updated_by`, `updated_datetime`, `updated_by_remote_addr`, `deleted_account`, `deleted_by`, `deleted_datetime`, `deleted_by_remote_addr`) VALUES
-(1, 'Administrator', 'ADMIN', '$2a$10$token4u.com/123456789u05l1pAFM2J.Mz63y8pn0UHMz3.etpSS', 'admin', 0, NULL, 1, '2011-02-25 09:14:58', '10.15.9.78', NULL, NULL, NULL, NULL, 1, '2012-10-23 17:45:54', '127.0.0.1', NULL, NULL, NULL, NULL);
+INSERT INTO `users` (`users_id`, `name`, `num_empl`, `pwd`, `role`, `access`, `change_pwd`, `in_charge`, `created_by`, `created_datetime`, `created_by_remote_addr`, `block_access`, `block_by`, `block_datetime`, `block_by_remote_addr`, `updated_by`, `updated_datetime`, `updated_by_remote_addr`, `deleted_account`, `deleted_by`, `deleted_datetime`, `deleted_by_remote_addr`) VALUES
+(1, 'Administrator', 'ADMIN', '$2a$10$token4u.com/123456789u05l1pAFM2J.Mz63y8pn0UHMz3.etpSS', 'admin', NULL, 0, NULL, 1, '2011-02-25 09:14:58', '10.15.9.78', NULL, NULL, NULL, NULL, 1, '2012-10-23 17:45:54', '127.0.0.1', NULL, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
