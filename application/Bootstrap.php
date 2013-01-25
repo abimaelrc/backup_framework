@@ -69,8 +69,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
 
 	protected function _initRoutes()
 	{
-		$routes = new Application_Model_Url();
-		$routes->fetchRouterRoute();
+		$this->getResource('front')->registerPlugin( new Application_Plugin_Url() );
 	}
 
 
