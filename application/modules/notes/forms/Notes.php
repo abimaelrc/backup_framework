@@ -24,12 +24,8 @@ class Notes_Form_Notes extends Zend_Form
 		$hash = new Zend_Form_Element_Hash('hashNotes');
 		$hash->setSalt('notesAppClosing')
 			->setTimeout(1800)
-			->setDecorators(
-				array(
-					array('Errors', array('class'=>'errorsHash', 'escape'=>false)),
-					'ViewHelper',
-				)
-			);
+			->setDecorators( array( array('Errors', array('class'=>'errorsHash', 'escape'=>false)),
+					                'ViewHelper', ));
 
 
 
@@ -39,21 +35,11 @@ class Notes_Form_Notes extends Zend_Form
 		 **************************/
 		$notes = new Zend_Form_Element_Textarea('notes');
 		$notes->setLabel('Notas: <span id="counterNotesContent">3000</span>')
-			->setDecorators(
-				array(
-					'Errors',
-					'ViewHelper',
-					array('HtmlTag', array('tag' => 'div', 'class' => 'paddingFormElement')),
-					array('Label', array('tag' => 'div', 'escape' => false)),
-				)
-			)
-			->setOptions(
-				array(
-					'cols' => 110,
-					'rows' => 15,
-					'onkeyup' => 'strlen(this, "counterNotesContent", 3000)'
-				)
-			)
+			->setDecorators( array( 'Errors',
+					                'ViewHelper',
+					                 array('HtmlTag', array('tag' => 'div', 'class' => 'paddingFormElement')),
+					                 array('Label', array('tag' => 'div', 'escape' => false)), ))
+			->setOptions( array( 'cols' => 110, 'rows' => 15, ))
 			->setRequired(true)
 			->addFilter('StringTrim')
 			->addFilter('StripTags');

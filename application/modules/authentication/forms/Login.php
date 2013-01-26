@@ -22,6 +22,7 @@ class Authentication_Form_Login extends Zend_Form
 			->setTimeout(1800)
 			->setDecorators( array( array('Errors', array('class'=>'errorsHash', 'escape'=>false)),
 									'ViewHelper', ));
+		$this->addElement($hash);
 
 
 
@@ -40,6 +41,7 @@ class Authentication_Form_Login extends Zend_Form
 			->addFilter('StripTags')
 			->addFilter('StringTrim')
 			->addFilter(new Filter_MbStrToUpper());
+		$this->addElement($numEmpl);
 
 
 
@@ -57,6 +59,7 @@ class Authentication_Form_Login extends Zend_Form
 									'Label', ))
 			->addFilter('StripTags')
 			->addFilter('StringTrim');
+		$this->addElement($pwd);
 
 
 
@@ -69,20 +72,6 @@ class Authentication_Form_Login extends Zend_Form
 			->setOptions(array('class' => 'submit'))
 			->setDecorators( array( 'ViewHelper',
 									array('HtmlTag', array('tag'=>'div', 'class'=>'marginTop10px alignCenter')), ));
-
-
-
-
-		/***************************
-		 *                      addElements
-		 **************************/
-		$this->addElements(
-			array(
-				$hash,
-				$numEmpl,
-				$pwd,
-				$submit
-			)
-		);
+		$this->addElement($submit);
 	}
 }

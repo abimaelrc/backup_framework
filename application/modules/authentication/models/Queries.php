@@ -1,6 +1,9 @@
 <?php
 class Authentication_Model_Queries extends Qry_Queries
 {
+	/**
+	 * @return bool
+	 */
 	public function loginQry()
 	{
 		$authAdapter = new Zend_Auth_Adapter_DbTable($this->_db);
@@ -16,15 +19,20 @@ class Authentication_Model_Queries extends Qry_Queries
 		if($result->isValid()){
 			$userInfo = $authAdapter->getResultRowObject();
 			$this->_auth->getStorage()->write($userInfo);
+
 			return true;
 		}
 		$this->setMessage('Usuario o contraseña incorrecta. Por favor trata nuevamente');
+
 		return false;
 	}
 
 
 
 
+	/**
+	 * @return bool
+	 */
 	public function currentAuthInfoQry()
 	{
 		$authAdapter = new Zend_Auth_Adapter_DbTable($this->_db);
@@ -40,8 +48,10 @@ class Authentication_Model_Queries extends Qry_Queries
 		if($result->isValid()){
 			$userInfo = $authAdapter->getResultRowObject();
 			$this->_auth->getStorage()->write($userInfo);
+
 			return true;
 		}
+
 		return false;
 	}
 }

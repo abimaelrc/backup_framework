@@ -1,12 +1,15 @@
 <?php
 $this->headScript()
      ->appendScript( '$(function(){
-	   $( "#notes" ).focus();
+	   $( "#notes" ).focus()
+	                .keyup(function(){
+						strlen($( this ), "counterNotesContent", 3000);
+					});
 	 });' );
 ?>
 <h2>Notas</h2>
 <div class="divEntireWidth">
-	<img src="/images/document-edit.png" />
+	<img src="/images/document-view.png" />
 	<div class="title">Añadir notas:</div>
 </div>
 <div class="form"><?php echo $this->form; ?></div>

@@ -30,6 +30,7 @@ class Configure_Form_ConfigureUsersEdit extends Zend_Form
 			 ->setTimeout(1800)
 			 ->setDecorators( array( array('Errors', array('class'=>'errorsHash', 'escape'=>false)),
 									 'ViewHelper', ));
+		$this->addElement($hash);
 
 
 
@@ -43,6 +44,7 @@ class Configure_Form_ConfigureUsersEdit extends Zend_Form
 				->addFilter('StripTags')
 				->addFilter('StringTrim')
 				->addValidator('Int');
+		$this->addElement($usersId);
 
 
 
@@ -65,6 +67,7 @@ class Configure_Form_ConfigureUsersEdit extends Zend_Form
 			->addValidator('regex', false, array( 'pattern' => '/^[a-záéíóúü\s]+$/i',
 												  'messages' => array( 'regexInvalid' => "'%value%' solo se permiten valores alpha",
 																	   'regexNotMatch' => "'%value%' solo se permiten valores alpha", ), ));
+		$this->addElement($name);
 
 
 
@@ -87,6 +90,7 @@ class Configure_Form_ConfigureUsersEdit extends Zend_Form
 													  'messages' => array( 'regexInvalid' => "'%value%' solo se permiten valores alphanuméricos",
 																		   'regexNotMatch' => "'%value%' solo se permiten valores alphanuméricos", ), ))
 				->addValidator(new Configure_Model_Validate_NumEmpl());
+		$this->addElement($numEmpl);
 
 
 
@@ -103,6 +107,7 @@ class Configure_Form_ConfigureUsersEdit extends Zend_Form
 			->setOptions(array('size'=>10, 'maxlength'=>10))
 			->addFilter('StripTags')
 			->addFilter('StringTrim');
+		$this->addElement($pwd);
 
 
 
@@ -127,6 +132,7 @@ class Configure_Form_ConfigureUsersEdit extends Zend_Form
 			$roleArray[$v['role']] = $v['role_name'];
 		}
 		$role->addMultiOptions($roleArray);
+		$this->addElement($role);
 
 
 
@@ -148,6 +154,7 @@ class Configure_Form_ConfigureUsersEdit extends Zend_Form
 			$inChargeArray[$v['users_id']] = $v['name'];
 		}
 		$inCharge->addMultiOptions($inChargeArray);
+		$this->addElement($inCharge);
 
 
 
@@ -160,6 +167,7 @@ class Configure_Form_ConfigureUsersEdit extends Zend_Form
 				  ->setDecorators( array( 'ViewHelper',
 										  array('Label', array('placement' => 'append')),
 										  array('HtmlTag', array('tag' => 'div')), ));
+		$this->addElement($changePwd);
 
 
 
@@ -172,22 +180,7 @@ class Configure_Form_ConfigureUsersEdit extends Zend_Form
 					->setDecorators( array( 'ViewHelper',
 											array('Label', array('placement' => 'append')),
 											array('HtmlTag', array('tag' => 'div')), ));
-
-
-
-
-		/***************************
-		 *                      addElements
-		 **************************/
-		$this->addElements( array( $hash,
-								   $usersId,
-								   $name,
-								   $numEmpl,
-								   $pwd,
-								   $role,
-								   $inCharge,
-								   $changePwd,
-								   $blockAccess, ));
+		$this->addElement($blockAccess);
 
 
 
@@ -213,13 +206,6 @@ class Configure_Form_ConfigureUsersEdit extends Zend_Form
 			   ->setDecorators( array( 'ViewHelper',
 									   array('HtmlTag', array('tag' => 'div')), ))
 			   ->setOptions(array('class' => 'submit'));
-
-
-
-
-		/***************************
-		 *                      addElement
-		 **************************/
 		$this->addElement($submit);
 	}
 }
