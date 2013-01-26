@@ -2,6 +2,14 @@
 class Statistics_Model_Queries extends Qry_Queries
 {
 	/**
+	 * Get content dinamically
+	 *
+	 * @param $values array
+	 * @param $db Zend_Db
+	 * @param $dbQuery string Query string
+	 * @param $unsetValues array Fields that are not supose to be returned
+	 * @param $encoding string Default: ISO-8859-1
+	 *
 	 * @return string | null
 	 */
 	private function _getContent(array $values = array(), $db = null, $dbQuery = null, $unsetValues = array(), $encoding = 'ISO-8859-1')
@@ -58,6 +66,9 @@ class Statistics_Model_Queries extends Qry_Queries
 	/**
 	 * Set encoding
 	 *
+	 * @param $data string
+	 * @param $setEnding string Default: UTF-8//TRANSLIT
+	 *
 	 * @return string
 	 */
 	private function _setEncoding($data, $setEncoding = 'UTF-8//TRANSLIT')
@@ -77,7 +88,7 @@ class Statistics_Model_Queries extends Qry_Queries
 
 
 	/**
-	 * @return array filename and data
+	 * @return array filename & info
 	 */
 	public function indexQry()
 	{
@@ -200,6 +211,12 @@ class Statistics_Model_Queries extends Qry_Queries
 
 
 
+	/**
+	 * Get employees that worked in application
+	 * Set to only get role user
+	 *
+	 * @return array
+	 */
 	public function getEmployeesQry()
 	{
 		$dbQuery = 'SELECT users_id, name, num_empl FROM users

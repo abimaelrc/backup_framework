@@ -28,12 +28,16 @@ class Notes_Model_Queries extends Qry_Queries
 		$this->_db->update('notes', $formUpdate, 'active = 1');
 
 		$this->_db->insert('notes', $form);
+
 		return true;
 	}
 
 
 
 
+	/**
+	 * @return bool | array
+	 */
 	public function getActiveNotesQry()
 	{
 		$dbQuery = 'SELECT n.*, u.name
@@ -46,6 +50,9 @@ class Notes_Model_Queries extends Qry_Queries
 
 
 
+	/**
+	 * @return void
+	 */
 	public function setInactiveNotesQry()
 	{
 		$data = array(
