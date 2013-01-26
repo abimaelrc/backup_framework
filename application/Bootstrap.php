@@ -75,6 +75,14 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
 
 
 
+	protected function _initCommonHelpers()
+	{
+		Zend_Controller_Action_HelperBroker::addPrefix('Common_Helper');
+	}
+
+
+
+
 	protected function _initViewHelpers()
 	{
 		$view = $this->getResource('layoutView');
