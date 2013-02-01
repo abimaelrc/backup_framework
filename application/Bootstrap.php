@@ -3,12 +3,9 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
 {
 	protected function _initSession()
 	{
-		Zend_Session::start();
+        $config = new Zend_Config_Ini(APPLICATION_PATH . '/configs/application.ini');
 
-		/**
-		 * Setting up timeout, default 3600 ( 1 hour )
-		 */
-		Extras_Session::sessionNamespace();
+		Extras_Session::sessionNamespace($config->toArray(), 1440);
 	}
 
 
