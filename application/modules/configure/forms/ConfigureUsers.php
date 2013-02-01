@@ -26,8 +26,11 @@ class Configure_Form_ConfigureUsers extends Zend_Form
 		 *                      hash
 		 **************************/
 		$hash = new Zend_Form_Element_Hash('hashConfigureUsers');
+        $config  = new Extras_Config();
+        $key     = $config->createMultidimensionalArray('production.additionalParams.hashTimeout');
+        $timeout = $config->getOptionArrayRecursive($key);
 		$hash->setSalt('configureUsers')
-			->setTimeout(1800)
+			->setTimeout($timeout)
 			->setDecorators( array( array('Errors', array('class'=>'errorsHash', 'escape'=>false)),
 									'ViewHelper', ));
 		$this->addElement($hash);
