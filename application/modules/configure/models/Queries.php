@@ -1,13 +1,13 @@
 <?php
 class Configure_Model_Queries extends Qry_Queries
 {
-	private function _restoreUserQry()
+	private function restoreUserQry()
 	{
-		$dbQuery 						= 'SELECT users_id FROM users WHERE num_empl = ' . $this->_db->quote($this->_chkParam('num_empl'));
-		$usersId 						= $this->_db->fetchOne($dbQuery);
+		$dbQuery 						= 'SELECT users_id FROM users WHERE num_empl = ' . $this->db->quote($this->chkParam('num_empl'));
+		$usersId 						= $this->db->fetchOne($dbQuery);
 
-		$post 							= $this->_filterXss($this->_params, false, true);
-		$post['pwd'] 					= crypt($post['pwd'], $this->_params['additionalParams']['salt']);
+		$post 							= $this->filterXss($this->params, false, true);
+		$post['pwd'] 					= crypt($post['pwd'], Extras_Config::getOption('salt', 'additionalParams', true));
 		$post['change_pwd'] 			= 1;
 		$post['block_access'] 			= 0;
 		$post['deleted_account'] 		= 0;
@@ -16,7 +16,7 @@ class Configure_Model_Queries extends Qry_Queries
 		$post['updated_by_remote_addr'] = Zend_Controller_Front::getInstance()->getRequest()->getServer('REMOTE_ADDR');
 		unset($post['hashConfigureUsers']);
 
-		$this->_db->update('users', $post, 'users_id = ' . $this->_db->quote($usersId));
+		$this->db->update('users', $post, 'users_id = ' . $this->db->quote($usersId));
 		$this->setMessage('Cuenta restaurada. Ya existía una cuenta con ese número de empleado y había sido borrada anteriormente');
 		return true;
 	}
@@ -26,7 +26,7 @@ class Configure_Model_Queries extends Qry_Queries
 
 	public function getConfigureUserInfoQry()
 	{
-		return $this->_db->fetchRow('SELECT * FROM users WHERE users_id = ' . $this->_db->quote($this->getSpecificUserInfo('users_id')));
+		return $this->db->fetchRow('SELECT * FROM users WHERE users_id = ' . $this->db->quote($this->getSpecificUserInfo('users_id')));
 	}
 
 
@@ -34,26 +34,25 @@ class Configure_Model_Queries extends Qry_Queries
 
 	public function configureAddUsersQry()
 	{
-		$post = $this->_filterXss($this->_params);
+		$post = $this->filterXss($this->params);
 		unset($post['hashConfigureUsers']);
-		unset($post['additionalParams']);
 
-		$dbQuery = 'SELECT COUNT(*) FROM users WHERE num_empl = ' . $this->_db->quote($post['num_empl']);
-		if($this->_db->fetchOne($dbQuery) > 0){
-			$dbQuery = 'SELECT deleted_account FROM users WHERE num_empl = ' . $this->_db->quote($post['num_empl']);
-			if($this->_db->fetchOne($dbQuery) == 1){
-				return $this->_restoreUserQry();
+		$dbQuery = 'SELECT COUNT(*) FROM users WHERE num_empl = ' . $this->db->quote($post['num_empl']);
+		if($this->db->fetchOne($dbQuery) > 0){
+			$dbQuery = 'SELECT deleted_account FROM users WHERE num_empl = ' . $this->db->quote($post['num_empl']);
+			if($this->db->fetchOne($dbQuery) == 1){
+				return $this->restoreUserQry();
 			}
 			return false;
 		}
 
 		$post['created_by']				= $this->getSpecificUserInfo('users_id');
-		$post['pwd'] 					= crypt($this->_chkParam('pwd'), $this->_params['additionalParams']['salt']);
+		$post['pwd'] 					= crypt($this->chkParam('pwd'), Extras_Config::getOption('salt', 'additionalParams', true));
 		$post['created_datetime'] 		= date('Y-m-d H:i:s');
 		$post['created_by_remote_addr'] = $_SERVER['REMOTE_ADDR'];
 		$post['in_charge'] 				= ( empty($post['in_charge']) === false ) ? $post['in_charge'] : null;
 
-		$this->_db->insert('users', $post);
+		$this->db->insert('users', $post);
 		return true;
 	}
 
@@ -62,35 +61,34 @@ class Configure_Model_Queries extends Qry_Queries
 
 	public function configureUpdateQry()
 	{
-		$post = $this->_filterXss($this->_params);
+		$post = $this->filterXss($this->params);
 		unset($post['submit']);
 		unset($post['confirmPwd']);
 		unset($post['oldPwd']);
 		unset($post['none']);
 		unset($post['hashConfigure']);
-		unset($post['additionalParams']);
 
 		$post['change_pwd'] 			= 0;
 		$post['updated_by'] 			= $this->getSpecificUserInfo('users_id');
 		$post['updated_datetime'] 		= date('Y-m-d H:i:s');
 		$post['updated_by_remote_addr'] = $_SERVER['REMOTE_ADDR'];
 		if(array_key_exists('pwd', $post)){
-			$post['pwd'] = crypt($post['pwd'], $this->_params['additionalParams']['salt']);
+			$post['pwd'] = crypt($post['pwd'], Extras_Config::getOption('salt', 'additionalParams', true));
 		}
 
-		$this->_db->update('users', $post, 'users_id = ' . $this->_db->quote($post['updated_by']));
+		$this->db->update('users', $post, 'users_id = ' . $this->db->quote($post['updated_by']));
 
-		$rowUserInfo = $this->_db->fetchRow('SELECT * FROM users WHERE users_id = ' . $this->_db->quote($post['updated_by']));
+		$rowUserInfo = $this->db->fetchRow('SELECT * FROM users WHERE users_id = ' . $this->db->quote($post['updated_by']));
 
-		$authAdapter = new Zend_Auth_Adapter_DbTable($this->_db);
+		$authAdapter = new Zend_Auth_Adapter_DbTable($this->db);
 		$authAdapter->setTableName('users')
 					->setIdentityColumn('num_empl')
 					->setCredentialColumn('pwd');
 		$authAdapter->setIdentity($rowUserInfo['num_empl'])
 					->setCredential($rowUserInfo['pwd']);
-		$this->_auth->authenticate($authAdapter);
+		$this->auth->authenticate($authAdapter);
 		$userInfo    = $authAdapter->getResultRowObject();
-		$this->_auth->getStorage()->write($userInfo);
+		$this->auth->getStorage()->write($userInfo);
 	}
 
 
@@ -102,9 +100,9 @@ class Configure_Model_Queries extends Qry_Queries
 					FROM users u INNER JOIN users_role r ON r.role = u.role
 					WHERE ( u.deleted_account IS NULL OR u.deleted_account = 0 )
 						  AND u.users_id != 1
-					      AND u.users_id != ' . $this->_db->quote($this->getSpecificUserInfo('users_id'))
+					      AND u.users_id != ' . $this->db->quote($this->getSpecificUserInfo('users_id'))
 					. ' ORDER BY r.role_order, u.name';
-		return $this->_db->fetchAll($dbQuery);
+		return $this->db->fetchAll($dbQuery);
 	}
 
 
@@ -112,8 +110,8 @@ class Configure_Model_Queries extends Qry_Queries
 
 	public function editUsersQry()
 	{
-		$usersId = filter_var($this->_chkParam('users_id'), FILTER_VALIDATE_INT)
-			? $this->_chkParam('users_id')
+		$usersId = filter_var($this->chkParam('users_id'), FILTER_VALIDATE_INT)
+			? $this->chkParam('users_id')
 			: null;
 
 		if(is_null($usersId)){
@@ -123,9 +121,9 @@ class Configure_Model_Queries extends Qry_Queries
 		$dbQuery = 'SELECT * FROM users
 					WHERE ( deleted_account IS NULL OR deleted_account = 0 )
 						  AND users_id != 1
-						  AND users_id != ' . $this->_db->quote($this->getSpecificUserInfo('users_id'))
-						  . ' AND users_id = ' . $this->_db->quote($usersId);
-		return $this->_db->fetchRow($dbQuery);
+						  AND users_id != ' . $this->db->quote($this->getSpecificUserInfo('users_id'))
+						  . ' AND users_id = ' . $this->db->quote($usersId);
+		return $this->db->fetchRow($dbQuery);
 	}
 
 
@@ -133,9 +131,8 @@ class Configure_Model_Queries extends Qry_Queries
 
 	public function updateUserInfoQry()
 	{
-		$post = $this->_filterXss($this->_params, false, true);
+		$post = $this->filterXss($this->params, false, true);
 		unset($post['hashConfigureUsersEdit']);
-		unset($post['additionalParams']);
 
 		foreach($post as $k => $v){
 			if(empty($v) && filter_var($v, FILTER_VALIDATE_INT) === false){
@@ -144,7 +141,7 @@ class Configure_Model_Queries extends Qry_Queries
 		}
 
 		if(!empty($post['pwd'])){
-			$post['pwd'] = crypt($post['pwd'], $this->_params['additionalParams']['salt']);
+			$post['pwd'] = crypt($post['pwd'], Extras_Config::getOption('salt', 'additionalParams', true));
 		}
 		$post['updated_by'] 				= $this->getSpecificUserInfo('users_id');
 		$post['updated_datetime'] 			= date('Y-m-d H:i:s');
@@ -159,7 +156,7 @@ class Configure_Model_Queries extends Qry_Queries
 													->getServer('REMOTE_ADDR');
 		}
 
-		$this->_db->update('users', $post, 'users_id = ' . $this->_db->quote($post['users_id']));
+		$this->db->update('users', $post, 'users_id = ' . $this->db->quote($post['users_id']));
 	}
 
 
@@ -167,14 +164,14 @@ class Configure_Model_Queries extends Qry_Queries
 
 	public function deleteUserQry()
 	{
-		$usersId 						= filter_var($this->_chkParam('users_id'), FILTER_VALIDATE_INT)
-										  ? $this->_chkParam('users_id')
+		$usersId 						= filter_var($this->chkParam('users_id'), FILTER_VALIDATE_INT)
+										  ? $this->chkParam('users_id')
 										  : 0;
 		$post['deleted_account'] 		= 1;
 		$post['deleted_by']				= $this->getSpecificUserInfo('users_id');
 		$post['deleted_datetime'] 		= date('Y-m-d H:i:s');
 		$post['deleted_by_remote_addr'] = Zend_Controller_Front::getInstance()->getRequest()->getServer('REMOTE_ADDR');
 
-		$this->_db->update('users', $post, 'users_id = ' . $this->_db->quote($usersId));
+		$this->db->update('users', $post, 'users_id = ' . $this->db->quote($usersId));
 	}
 }

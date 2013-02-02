@@ -20,14 +20,13 @@ class Configure_IndexController extends Zend_Controller_Action
 																	'numEmpl' => $rowUserInfo['num_empl'], ));
 		$this->view->form 	 = $form->setAction($this->view->url(array(), 'configure'));
 		$this->view->message = implode('', $this->_helper->getHelper('FlashMessenger')->getMessages());
-
+Extras_Config::getOption(Extras_Config::createMultidimensionalArray('test.test2.test3'), 'additionalParams', true);
 		if( $this->getRequest()->isPost() === true ){
 			if( $form->isValid($this->getRequest()->getPost()) === true ){
 				$post = $form->getValues();
 
 				if(empty($post['pwd'])){ unset($post['pwd']); }
-				$qry->setParams( array_merge( $post,
-											  array( 'additionalParams' => Zend_Registry::get('additionalParams'), )));
+				$qry->setParams($post);
 				$qry->configureUpdateQry();
 
 				$this->_helper->FlashMessenger('Cuenta editada el ' . date('Y-m-d g:i:s a'));

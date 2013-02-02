@@ -1,39 +1,58 @@
 <?php
 class Extras_Headers
 {
-	public static function csv($fileName)
-	{
-		header('Expires: 0');   
-		header('Last-Modified: ' . gmdate('D, d M Y H:i:s') . ' GMT');
-		header('Content-Description: File Transfer');
-		header('Cache-Control: no-store, no-cache, must-revalidate, pre-check=0, post-check=0, max-age=0');
-		header('Content-Type: application/octet-stream');
-		if(isset($_SERVER['HTTP_USER_AGENT']) && (strpos($_SERVER['HTTP_USER_AGENT'], 'MSIE') !== false)){
-			header('Content-Type: application/force-download'); //IE HEADER
-		}
-		header('Pragma: no-cache'); 
-		header('Accept-Ranges: bytes');
-		header('Content-Disposition: attachment; filename="' . $fileName . '.csv"');
-	}
+    /**
+     * @param string $fileName
+     */
+    public static function csv($fileName)
+    {
+        $fc = Zend_Controller_Front::getInstance();
+        $fc->getResponse()
+           ->setHeader('Expires', gmdate('D, d M Y H:i:s', strtotime('-1 week')) . ' GMT')
+           ->setHeader('Last-Modified', gmdate('D, d M Y H:i:s', strtotime('-1 day')) . ' GMT')
+           ->setHeader('ontent-Description', 'File Transfer')
+           ->setHeader('Cache-Control', 'no-store, no-cache, must-revalidate, pre-check=0, post-check=0, max-age=0')
+           ->setHeader('Content-Type', 'application/octet-stream')
+           ->setHeader('Pragma', 'no-cache')
+           ->setHeader('Accept-Ranges', 'bytes')
+           ->setHeader('Content-Disposition', 'attachment; filename="' . $fileName . '.csv"');
+
+        /**
+         * IE header
+         */
+        if (isset($_SERVER['HTTP_USER_AGENT']) === true && (strpos($_SERVER['HTTP_USER_AGENT'], 'MSIE') !== false)) {
+            $fc->setHeader('Content-Type', 'application/force-download');
+        }
+    }
 
 
 
 
-	public static function xls($fileName)
-	{
-		header('Expires: 0');   
-		header('Last-Modified: ' . gmdate('D, d M Y H:i:s') . ' GMT');
-		header('Content-Description: File Transfer');
-		header('Cache-Control: no-store, no-cache, must-revalidate, pre-check=0, post-check=0, max-age=0');
-		header('Content-Type: application/octet-stream');
-		if(isset($_SERVER['HTTP_USER_AGENT']) && (strpos($_SERVER['HTTP_USER_AGENT'], 'MSIE') !== false)){
-			header('Content-Type: application/force-download'); //IE HEADER
-		}
-		header('Pragma: no-cache'); 
-		header('Accept-Ranges: bytes');
-		header('Content-Transfer-Encoding: none'); 
-		header('Content-Type: application/vnd.ms-excel');                 // This should work for IE & Opera
-		header('Content-Type: application/x-msexcel');                    // This should work for the rest
-		header('Content-Disposition: attachment; filename="' . $fileName . '.xls"');
-	}
+    /**
+     * @source 8 This should work for browsers that are not IE || Opera
+     * @param string $fileName
+     */
+    public static function xls($fileName)
+    {
+        $fc = Zend_Controller_Front::getInstance();
+        $fc->getResponse()
+           ->setHeader('Expires', gmdate('D, d M Y H:i:s', strtotime('-1 week')) . ' GMT')
+           ->setHeader('Last-Modified', gmdate('D, d M Y H:i:s', strtotime('-1 day')) . ' GMT')
+           ->setHeader('ontent-Description', 'File Transfer')
+           ->setHeader('Cache-Control', 'no-store, no-cache, must-revalidate, pre-check=0, post-check=0, max-age=0')
+           ->setHeader('Content-Type', 'application/x-msexcel')
+           ->setHeader('Pragma', 'no-cache')
+           ->setHeader('Accept-Ranges', 'bytes')
+           ->setHeader('Content-Disposition', 'attachment; filename="' . $fileName . '.xls"');
+
+        if (
+            isset($_SERVER['HTTP_USER_AGENT']) === true
+            && (
+                strpos($_SERVER['HTTP_USER_AGENT'], 'MSIE') !== false 
+                || strpos($_SERVER['HTTP_USER_AGENT'], 'Opera') !== false
+            )
+        ) {
+            $fc->setHeader('Content-Type', 'application/vnd.ms-excel');
+        }
+    }
 }

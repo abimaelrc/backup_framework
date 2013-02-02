@@ -3,96 +3,108 @@
 class Extras_Config
 {
     /**
-     * Zend_Config_Ini object
+     * Base key in Zend_Registry
+     *
+     * @var string
      */
-    private $config;
+    public static $registryKey = 'additionalParams';
 
     /**
-     * @param $iniPath string Path to ini
+     * @param array|string $keys
+     * @param $registryKey
+     * @param $singleValue
+     * @return mixed
      */
-    public function __construct($iniPath = null)
+    public static function getOption($keys, $registryKey = self::registryKey, $singleValue = false)
     {
-        $iniPath      = (empty($iniPath) === true)
-                      ? (APPLICATION_PATH . '/configs/application.ini')
-                      : $iniPath;
-        $this->config = new Zend_Config_Ini($iniPath);
-    }
+        $keys = (is_array($keys) === true) ? $keys : array($keys);
+        $registry                = Zend_Registry::get($registryKey);
+        $result                  = array();
+        $getOptionArrayRecursive = function (array $keys, array $options) use (&$getOptionArrayRecursive) {
+            $selectedValue = null;
 
-    /**
-     * @return Zend_Config_Ini
-     */
-    public function getOptions()
-    {
-        return $this->config;
-    }
+            foreach ($keys as $key => $keyValue) {
+                $key         = (is_array($keyValue) === true)
+                             ? $key
+                             : $keyValue;
+                $optionValue = (array_key_exists($key, $options) === true)
+                             ? $options[$key]
+                             : null;
+                if (is_array($optionValue) === true) {
+                    $selectedValue = $getOptionArrayRecursive($keyValue, $optionValue);
+                } else {
+                    $selectedValue = $optionValue;
+                }
+            }
 
-    /**
-     * @return array
-     */
-    public function getOptionsArray()
-    {
-        return $this->config->toArray();
-    }
+            return $selectedValue;
+        };
 
-    /**
-     * @param $key string
-     * @return array
-     */
-    public function getOptionArray($key)
-    {
-        $options = $this->config->toArray();
-
-        return (array_key_exists($key, $options) === true)
-            ? $options[$key]
-            : array();
-    }
-
-    /**
-     * @param $needle string
-     * @param $options array
-     * @return string
-     */
-    public function getOptionArrayRecursive(
-        array $needle,
-        array $options = array()
-    ) {
-        $selectedValue = null;
-        $options       = (empty($options) === true)
-                       ? $this->config->toArray()
-                       : $options;
-
-        foreach ($needle as $key => $keyValue) {
-            $key         = (is_array($keyValue) === true)
-                         ? $key
-                         : $keyValue;
-            $optionValue = (array_key_exists($key, $options) === true)
-                         ? $options[$key]
-                         : array();
-            if (is_array($keyValue) === true) {
-                $selectedValue = self::getOptionArrayRecursive($keyValue, $optionValue);
-            } else {
-                $selectedValue = $optionValue;
+        foreach ($keys as $key => $keyValue) {
+            if (array_key_exists($key, $registry) === true && is_array($keyValue) === true) {
+                $result[] = $getOptionArrayRecursive($keyValue, $registry[$key]);
+            } elseif (is_array($keyValue) === false) {
+                $result[] = $registry[$keyValue];
             }
         }
 
-        return $selectedValue;
+        if ($singleValue === true) {
+            $result = array_reverse($result);
+            $result = array_pop($result);
+        }
+
+        return $result;
     }
 
     /**
-     * @param $value string
+     * First time created
+     *
+     * @param string $value
+     * @param mixed $value
+     * @param string $delimiter
+     * @return array
+     * @deprecated
      */
-    public function createMultidimensionalArray($value)
-    {
-        $valueArray = explode('.', $value);
-        $func       = function ($values) use (&$func) {
-            $fixValue       = array();
-            $values         = array_reverse($values);
-            $key            = array_pop($values);
-            $values         = array_reverse($values);
-            $fixValue[$key] = (empty($values) === false) ? $func($values) : $key;
+    /**
+     * public function createMultidimensionalArray_DEPRECATE($keys, $value = null, $delimiter = '.')
+     * {
+     *   $keysArray  = explode($delimiter, $keys);
+     *   $func       = function ($keys, $value) use (&$func) {
+     *       $fixValue       = array();
+     *       $keys           = array_reverse($keys);
+     *       $key            = array_pop($keys);
+     *       $keys           = array_reverse($keys);
+     *       $fixValue[$key] = (empty($keys) === false)
+     *                       ? $func($keys, $value)
+     *                       : ((empty($value) === true) ? $key : $value);
+     *
+     *       return $fixValue;
+     *   };
+     *
+     *   return $func($keysArray, $value);
+     * }
+     */
 
-            return $fixValue;
-        };
-        return $func($valueArray);
+    /**
+     * @author dashtrash http://www.forosdelweb.com/miembros/dashtrash/
+     * @example http://www.forosdelweb.com/f18/aporte-crear-array-multidimensional-dinamicamente-cadena-1035238/
+     * @param string $value
+     * @param mixed $value
+     * @param string $delimiter
+     * @return array
+     */
+    public static function createMultidimensionalArray($keys, $value = null, $delimiter = '.')
+    {
+        $keysArrays = explode($delimiter, $keys);
+        $result     = array();
+        $tmp        =& $result;
+
+        foreach ($keysArrays as $key) {
+            $tmp =& $tmp[$key];
+        }
+
+        $tmp = (empty($value) === true) ? $key : $value;
+
+        return $result;
     }
 }

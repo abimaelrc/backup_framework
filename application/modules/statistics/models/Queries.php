@@ -12,7 +12,7 @@ class Statistics_Model_Queries extends Qry_Queries
 	 *
 	 * @return string | null
 	 */
-	private function _getContent(array $values = array(), $db = null, $dbQuery = null, $unsetValues = array(), $encoding = 'ISO-8859-1')
+	private function getContent(array $values = array(), $db = null, $dbQuery = null, $unsetValues = array(), $encoding = 'ISO-8859-1')
 	{
 		$content   = null;
 		$firstTime = true;
@@ -100,7 +100,7 @@ class Statistics_Model_Queries extends Qry_Queries
 		/**
 		 * Filter for XSS attacks
 		 */
-		$values      = $this->_filterXss($this->_params, false, true);
+		$values      = $this->filterXss($this->params, false, true);
 
 		/**
 		 * if name of type do not exists just return empty values
@@ -116,8 +116,8 @@ class Statistics_Model_Queries extends Qry_Queries
 		$user        = null;
 
 		if( empty($values['users_id']) === false ){
-			$dbQuery     = 'SELECT name, num_empl FROM users WHERE users_id = ' . $this->_db->quote($values['users_id']);
-			$user        = $this->_db->fetchRow($dbQuery);
+			$dbQuery     = 'SELECT name, num_empl FROM users WHERE users_id = ' . $this->db->quote($values['users_id']);
+			$user        = $this->db->fetchRow($dbQuery);
 			$nameNumEmpl = ' - ' . $user['name'] . '(' . $user['num_empl'] . ')';
 		}
 
@@ -149,8 +149,8 @@ class Statistics_Model_Queries extends Qry_Queries
 		 * Set for specific or range dates and times
 		 */
 		$dates           = ( ( empty($values['to']) === true )
-			             ? ( ' = ' . $this->_db->quote($values['from']) )
-						 : ( ' BETWEEN ' . $this->_db->quote($values['from']) . ' AND ' . $this->_db->quote($values['to']) ));
+			             ? ( ' = ' . $this->db->quote($values['from']) )
+						 : ( ' BETWEEN ' . $this->db->quote($values['from']) . ' AND ' . $this->db->quote($values['to']) ));
 		$timeStart 		 = intval($values['from_hour']);
 		$timeEnd   		 = intval($values['to_hour']);
 
@@ -186,10 +186,10 @@ class Statistics_Model_Queries extends Qry_Queries
 						WHERE DATE_FORMAT(created_datetime, "%Y-%m-%d") ' . $dates
 						      . ' AND DATE_FORMAT(created_datetime, "%H") >= ' . $timeStart
 						      . ' AND DATE_FORMAT(created_datetime, "%H") <= ' . $timeEnd
-						      . ( !empty($values['users_id']) ? ( ' AND created_by = ' . $this->_db->quote($values['users_id']) ) : '' );
-			$rows    = $this->_db->fetchAll($dbQuery);
+						      . ( !empty($values['users_id']) ? ( ' AND created_by = ' . $this->db->quote($values['users_id']) ) : '' );
+			$rows    = $this->db->fetchAll($dbQuery);
 
-			$info    .= $this->_getContent(array(), $this->_db, $rows);
+			$info    .= $this->getContent(array(), $this->db, $rows);
 		}
 
 
@@ -222,6 +222,6 @@ class Statistics_Model_Queries extends Qry_Queries
 		$dbQuery = 'SELECT users_id, name, num_empl FROM users
 					WHERE ( deleted_account = 0 OR deleted_account IS NULL ) AND role = "user" 
 					ORDER BY name';
-		return $this->_db->fetchAll($dbQuery);
+		return $this->db->fetchAll($dbQuery);
 	}
 }

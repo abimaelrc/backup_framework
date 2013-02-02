@@ -36,8 +36,7 @@ class Authentication_IndexController extends Zend_Controller_Action
 
 		if($this->getRequest()->isPost()){
 			if($form->isValid($this->getRequest()->getPost())){
-				$qry->setParams( array_merge( $form->getValues(),
-											  array('additionalParams' => Zend_Registry::get('additionalParams')) ));
+				$qry->setParams($form->getValues());
 				if($qry->loginQry()){
 					$this->_redirect($requestURL);
 				}else{

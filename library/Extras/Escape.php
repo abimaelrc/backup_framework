@@ -1,13 +1,19 @@
 <?php
 class Extras_Escape
 {
-	public function escape($string)
-	{
-		$string = urldecode($string);
-		$string = html_entity_decode($string);
-		$string = strip_tags($string);
-		$string = htmlentities($string, ENT_QUOTES, 'UTF-8');
-		$string = trim($string);
-		return $string;
-	}
+    /**
+     * @param string $value
+     * @param string $encoding
+     * @return string
+     */
+    public function escape($value, $encoding = 'UTF-8')
+    {
+        $value = urldecode($value);
+        $value = html_entity_decode($value);
+        $value = strip_tags($value);
+        $value = htmlentities($value, ENT_QUOTES, $encoding);
+        $value = trim($value);
+
+        return $value;
+    }
 }

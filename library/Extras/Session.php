@@ -1,12 +1,15 @@
 <?php
 class Extras_Session
 {
+    /**
+     * Namespace
+     * @var string
+     */
     const NS = 'test';
 
     /**
-     * @param $options array
-     * @param $sessionExpire int
-     *     Default 1440 = 24 minutes
+     * @param array $options
+     * @param int $sessionExpire Default 1440 = 24 minutes
      * @return Zend_Session_Namespace
      */
     public static function sessionNamespace(array $options = array(), $sessionExpire = 1440)
