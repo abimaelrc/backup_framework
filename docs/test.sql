@@ -150,16 +150,7 @@ CREATE TABLE IF NOT EXISTS `users` (
   KEY `deleted_datetime` (`deleted_datetime`),
   KEY `deleted_by_remote_addr` (`deleted_by_remote_addr`),
   KEY `access` (`access`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
-
---
--- Dumping data for table `users`
---
-
-INSERT INTO `users` (`users_id`, `name`, `num_empl`, `pwd`, `role`, `access`, `change_pwd`, `in_charge`, `created_by`, `created_datetime`, `created_by_remote_addr`, `block_access`, `block_by`, `block_datetime`, `block_by_remote_addr`, `updated_by`, `updated_datetime`, `updated_by_remote_addr`, `deleted_account`, `deleted_by`, `deleted_datetime`, `deleted_by_remote_addr`) VALUES
-(1, 'Administrator', 'ADMIN', '$2a$10$token4u.com/123456789u05l1pAFM2J.Mz63y8pn0UHMz3.etpSS', 'admin', NULL, 0, NULL, 1, '2011-02-25 09:14:58', '10.15.9.78', NULL, NULL, NULL, NULL, 1, '2012-10-23 17:45:54', '127.0.0.1', NULL, NULL, NULL, NULL);
-
--- --------------------------------------------------------
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 --
 -- Table structure for table `users_role`

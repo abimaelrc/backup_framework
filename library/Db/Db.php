@@ -11,7 +11,7 @@ class Db_Db
          *        'username' => '<USERNAME>',
          *        'password' => '<PASSWORD>',
          *        'dbname' => 'test',
-         *        'driver_options' => array(PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES UTF8;'), )
+         *        'driver_options' => array(PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES UTF8'), )
          */
         return new Zend_Db_Adapter_Pdo_Mysql(Db_Config::config());
     }
