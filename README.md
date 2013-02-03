@@ -2,7 +2,7 @@
 ==================
 ### Database
 
-See ``test.sql`` is found in ``docs`` directory
+See ```test.sql``` is found in ```/docs``` directory
 
 ### Login
 - user: admin

@@ -13,11 +13,11 @@ class Extras_Config
 
     /**
      * @param array|string $keys
-     * @param $registryKey
-     * @param $singleValue
+     * @param string $registryKey
+     * @param boolean $returnFirstValue
      * @return mixed
      */
-    public static function getOption($keys, $registryKey = 'additionalParams', $singleValue = false)
+    public static function getOption($keys, $registryKey = 'additionalParams', $returnFirstValue = false)
     {
         $keys = (is_array($keys) === true) ? $keys : array($keys);
         $registry                = Zend_Registry::get($registryKey);
@@ -50,7 +50,7 @@ class Extras_Config
             }
         }
 
-        if ($singleValue === true) {
+        if ($returnFirstValue === true) {
             $result = array_reverse($result);
             $result = array_pop($result);
         }

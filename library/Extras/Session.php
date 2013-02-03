@@ -2,17 +2,11 @@
 class Extras_Session
 {
     /**
-     * Namespace
-     * @var string
-     */
-    const NS = 'test';
-
-    /**
      * @param array $options
      * @param int $sessionExpire Default 1440 = 24 minutes
      * @return Zend_Session_Namespace
      */
-    public static function sessionNamespace(array $options = array(), $sessionExpire = 1440)
+    public static function sessionNamespace(array $options = array(), $sessionExpire = 1440, $sessionNamespace = null)
     {
         Zend_Session::start();
 
@@ -30,7 +24,10 @@ class Extras_Session
         }
         Zend_Session::setOptions($sessionOptions);
 
-        $session = new Zend_Session_Namespace(self::NS);
+        $sessionNamespace = (empty($sessionNamespace) === true)
+                          ? Extras_Config::getOption('sessionNamespace', 'additionalParams', true)
+                          : $sessionNamespace;
+        $session = new Zend_Session_Namespace($sessionNamespace);
         $session->setExpirationSeconds($sessionExpire);
 
         return $session;
@@ -39,9 +36,12 @@ class Extras_Session
     /**
      * @return Zend_Auth_Storage_Session
      */
-    public static function storageNamespace()
+    public static function storageNamespace($sessionNamespace = null)
     {
-        $session = new Zend_Auth_Storage_Session(self::NS);
+        $sessionNamespace = (empty($sessionNamespace) === true)
+                          ? Extras_Config::getOption('sessionNamespace', 'additionalParams', true)
+                          : $sessionNamespace;
+        $session = new Zend_Auth_Storage_Session($sessionNamespace);
 
         return $session;
     }
