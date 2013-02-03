@@ -22,11 +22,8 @@ class Notes_Form_Notes extends Zend_Form
 		 *                      hash
 		 **************************/
 		$hash = new Zend_Form_Element_Hash('hashNotes');
-        $config  = new Extras_Config();
-        $key     = $config->createMultidimensionalArray('production.additionalParams.hashTimeout');
-        $timeout = $config->getOptionArrayRecursive($key);
 		$hash->setSalt('notesAppClosing')
-			->setTimeout($timeout)
+			->setTimeout(Extras_Config::getOption('hashTimeout', 'additionalParams', true))
 			->setDecorators( array( array('Errors', array('class'=>'errorsHash', 'escape'=>false)),
 					                'ViewHelper', ));
 

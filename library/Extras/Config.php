@@ -3,19 +3,12 @@
 class Extras_Config
 {
     /**
-     * Base key in Zend_Registry
-     *
-     * @var string
-     */
-    public static $registryKey = 'additionalParams';
-
-    /**
      * @param array|string $keys
      * @param $registryKey
      * @param $singleValue
      * @return mixed
      */
-    public static function getOption($keys, $registryKey = self::registryKey, $singleValue = false)
+    public static function getOption($keys, $registryKey = 'additionalParams', $singleValue = false)
     {
         $keys = (is_array($keys) === true) ? $keys : array($keys);
         $registry                = Zend_Registry::get($registryKey);
