@@ -12,6 +12,7 @@ See test.sql is found in docs directory
 
 The following is a sample VHOST you might want to consider for your project.
 
+```conf
 NameVirtualHost localhost:1234
 
 <VirtualHost localhost:1234>
@@ -25,3 +26,4 @@ NameVirtualHost localhost:1234
 		Allow from all
 	</Directory>
 </VirtualHost>
+```
