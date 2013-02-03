@@ -1,86 +1,147 @@
 <?php
 class Qry_Queries
 {
-	protected $db;
-	protected $params;
-	protected $auth;
-	protected $userInfo;
-	protected $message;
+    /**
+     * @var Zend_Db
+     */
+    protected $db;
 
-	public function __construct()
-	{
-		$this->db 		= Db_Db::conn();
-		$this->auth 	= Zend_Auth::getInstance();
-		$this->auth->setStorage(Extras_Session::storageNamespace());
-		$this->userInfo = $this->getUserInfo();
-	}
+    /**
+     * @var array
+     */
+    protected $params;
 
-	public function setParams(array $params)
-	{
-		$this->params = $params;
-	}
+    /**
+     * @var Zend_Auth
+     */
+    protected $auth;
 
-	/**
-	 * @param mixed $key
-	 * @param mixed $defaultValue
-	 * @param bool $overwriteEmptyValue
-	 * @return mixed
-	 */
-	protected function chkParam($key, $defaultValue = null, $overwriteEmptyValue = false)
-	{
-		return ( is_array($this->params) && array_key_exists($key, $this->params) && !empty($this->params[$key])
-				 || is_array($this->params) && array_key_exists($key, $this->params) && !$overwriteEmptyValue )
-				? $this->params[$key]
-				: $defaultValue;
-	}
+    /**
+     * Zend_Auth identity
+     *
+     * @var object
+     */
+    protected $userInfo;
 
-	public function setAuth(Zendauth $auth)
-	{
-		$this->auth = $auth;
-	}
+    /**
+     * @var string
+     */
+    protected $message;
 
-	public function setUserInfo(Zendauth $auth)
-	{
-		$this->userInfo = $auth->getIdentity();
-	}
+    public function __construct()
+    {
+        $this->db       = Db_Db::conn();
+        $this->auth     = Zend_Auth::getInstance();
+        $this->auth->setStorage(Extras_Session::storageNamespace());
+        $this->userInfo = $this->getUserInfo();
+    }
 
-	public function getUserInfo()
-	{
-		return $this->auth->getIdentity();
-	}
+    /**
+     * @param array $params
+     */
+    public function setParams(array $params)
+    {
+        $this->params = $params;
+    }
 
-	public function getSpecificUserInfo($info)
-	{
-		return ( is_object($this->userInfo) && array_key_exists($info, $this->userInfo) )
-			? $this->userInfo->$info
-			: null;
-	}
+    /**
+     * @param string $key
+     * @param mixed $defaultValue
+     * @param boolean $overwriteEmptyValue
+     * @return mixed
+     */
+    protected function chkParam($key, $defaultValue = null, $overwriteEmptyValue = false)
+    {
+        return (
+            is_array($this->params) === true
+            && array_key_exists($key, $this->params) === true
+            && empty($this->params[$key]) === false
+            || is_array($this->params) === true
+            && array_key_exists($key, $this->params) === true
+            && $overwriteEmptyValue === false
+        )
+            ? $this->params[$key]
+            : $defaultValue;
+    }
 
-	public function setMessage($message)
-	{
-		$this->message .= $message;
-	}
+    /**
+     * @param object $auth Zend_Auth
+     */
+    public function setAuth(Zend_Auth $auth)
+    {
+        $this->auth = $auth;
+    }
 
-	public function getMessage()
-	{
-		return $this->message;
-	}
+    /**
+     * @param object $auth Zend_Auth
+     */
+    public function setUserInfo(Zend_Auth $auth)
+    {
+        $this->userInfo = $auth->getIdentity();
+    }
 
+    /**
+     * @return object
+     */
+    public function getUserInfo()
+    {
+        return $this->auth->getIdentity();
+    }
+
+    /**
+     * @param string $info
+     * @return mixed
+     */
+    public function getSpecificUserInfo($info)
+    {
+        return ( is_object($this->userInfo) && array_key_exists($info, $this->userInfo) )
+            ? $this->userInfo->$info
+            : null;
+    }
+
+    /**
+     * @param string $message
+     */
+    public function setMessage($message)
+    {
+        $this->message .= $message;
+    }
+
+    /**
+     * @return string
+     */
+    public function getMessage()
+    {
+        return $this->message;
+    }
+
+    /**
+     * @param string $fileName
+     */
     public function csv($fileName)
     {
         Extras_Headers::csv($fileName);
     }
 
+    /**
+     * @param string $fileName
+     */
     public function xls($fileName)
     {
         Extras_Headers::xls($fileName);
     }
 
-	protected function filterXss($params, $returnStr = false, $realEscapeString = false){
-		$valuesFilter = new Filter_Xss();
+    /**
+     * @param array|string $params
+     * @param boolean $returnStr
+     * @param boolean $realEscapeString
+     * @return mixed
+     */
+    protected function filterXss($params, $returnStr = false, $realEscapeString = false){
+        $valuesFilter = new Filter_Xss();
 
-		return ( $realEscapeString === true )
-			? $valuesFilter->realEscapeString($params, $returnStr)
-			: $valuesFilter->filterXss($params, $returnStr);
-	}
+        return ( $realEscapeString === true )
+            ? $valuesFilter->realEscapeString($params, $returnStr)
+            : $valuesFilter->filterXss($params, $returnStr);
+    }
 }

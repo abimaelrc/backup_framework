@@ -1,48 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
 <config>
-	<nav>
-		<mainNav>
-			<label>main nav</label>
-			<uri>#</uri>
-			<pages>
-				<home>
-					<label>Inicio</label>
-					<uri>/default/index/index</uri>
-					<title>Inicio</title>
-					<resource>default:index:index</resource>
-				</home>
-			</pages>
-		</mainNav>
+    <nav>
+        <mainNav>
+            <label>main nav</label>
+            <uri>#</uri>
+            <pages>
+                <home>
+                    <label>Inicio</label>
+                    <uri>/default/index/index</uri>
+                    <title>Inicio</title>
+                    <resource>default:index:index</resource>
+                </home>
+            </pages>
+        </mainNav>
 
-		<settings>
-			<label>settings nav</label>
-			<uri>#</uri>
-			<pages>
-				<notes>
-					<label>Notas</label>
-					<uri>/notes/index/index</uri>
-					<title>Notas</title>
-					<resource>notes:index:index</resource>
-				</notes>
-				<statistics>
-					<label>Estadísticas</label>
-					<uri>/statistics/index/index</uri>
-					<title>Estadísticas</title>
-					<resource>statistics:index:index</resource>
-				</statistics>
-				<configUsers>
-					<label>Añadir Usuario</label>
-					<uri>/configure/users/index</uri>
-					<title>Añadir Usuarios</title>
-					<resource>configure:users:index</resource>
-				</configUsers>
-				<users>
-					<label>Usuarios</label>
-					<uri>/configure/edit/index</uri>
-					<title>Editar Usuarios</title>
-					<resource>configure:edit:index</resource>
-				</users>
-			</pages>
-		</settings>
-	</nav>
+        <settings>
+            <label>settings nav</label>
+            <uri>#</uri>
+            <pages>
+                <notes>
+                    <label>Notas</label>
+                    <uri>/notes/index/index</uri>
+                    <title>Notas</title>
+                    <resource>notes:index:index</resource>
+                </notes>
+                <statistics>
+                    <label>Estadísticas</label>
+                    <uri>/statistics/index/index</uri>
+                    <title>Estadísticas</title>
+                    <resource>statistics:index:index</resource>
+                </statistics>
+                <configUsers>
+                    <label>Añadir Usuario</label>
+                    <uri>/configure/users/index</uri>
+                    <title>Añadir Usuarios</title>
+                    <resource>configure:users:index</resource>
+                </configUsers>
+                <users>
+                    <label>Usuarios</label>
+                    <uri>/configure/edit/index</uri>
+                    <title>Editar Usuarios</title>
+                    <resource>configure:edit:index</resource>
+                </users>
+            </pages>
+        </settings>
+    </nav>
 </config>

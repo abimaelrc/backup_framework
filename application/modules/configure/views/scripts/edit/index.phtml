@@ -1,33 +1,33 @@
 <h2>Usuarios</h2>
 <?php if(count($this->rows) > 0): ?>
 <table id="edit-user">
-	<tr class="title">
-		<th class="edit-erase"></th>
-		<th class="edit-erase"></th>
-		<th class="name">Nombre</th>
-		<th class="role">Rol</th>
-		<th class="change-pwd">Cambiar Contraseña</th>
-		<th class="block-access">Cuenta bloqueada</th>
-	</tr>
-	<?php foreach($this->rows as $v): ?>
-		<?php $s = empty($s) || $s == 'even' ? 'odd' : 'even' ; ?>
-		<tr class="<?php echo $s; ?>">
-			<td>
-				<a href="<?php echo $this->url(array(), 'configure-edit-edit'); ?>?users_id=<?php echo $this->escape($v['users_id']); ?>">
-					<img src="/images/document-edit.png" title="Editar" alt="Editar" />
-				</a>
-			</td>
-			<td>
-				<a href="<?php echo $this->url(array(), 'configure-edit-delete'); ?>?users_id=<?php echo $this->escape($v['users_id']); ?>" onclick="return confirm('Deseas eliminar el usuario <?php echo $this->escape($v['name'] . ' - ' . $this->escape($v['num_empl'])); ?>')">
-					<img src="/images/delete.png" title="Eliminar" alt="Eliminar" />
-				</a>
-			</td>
-			<td><?php echo $this->escape($v['name']); ?></td>
-			<td><?php echo $this->escape($v['role']); ?></td>
-			<td><?php echo $v['change_pwd'] == 1 ? 'SÍ' : 'NO'; ?></td>
-			<td><?php echo $v['block_access'] == 1 ? 'SÍ' : 'NO'; ?></td>
-		</tr>
-	<?php endforeach; ?>
+    <tr class="title">
+        <th class="edit-erase"></th>
+        <th class="edit-erase"></th>
+        <th class="name">Nombre</th>
+        <th class="role">Rol</th>
+        <th class="change-pwd">Cambiar Contraseña</th>
+        <th class="block-access">Cuenta bloqueada</th>
+    </tr>
+    <?php foreach($this->rows as $v): ?>
+        <?php $s = empty($s) || $s == 'even' ? 'odd' : 'even' ; ?>
+        <tr class="<?php echo $s; ?>">
+            <td>
+                <a href="<?php echo $this->url(array(), 'configure-edit-edit'); ?>?users_id=<?php echo $this->escape($v['users_id']); ?>">
+                    <img src="/images/document-edit.png" title="Editar" alt="Editar" />
+                </a>
+            </td>
+            <td>
+                <a href="<?php echo $this->url(array(), 'configure-edit-delete'); ?>?users_id=<?php echo $this->escape($v['users_id']); ?>" onclick="return confirm('Deseas eliminar el usuario <?php echo $this->escape($v['name'] . ' - ' . $this->escape($v['num_empl'])); ?>')">
+                    <img src="/images/delete.png" title="Eliminar" alt="Eliminar" />
+                </a>
+            </td>
+            <td><?php echo $this->escape($v['name']); ?></td>
+            <td><?php echo $this->escape($v['role']); ?></td>
+            <td><?php echo $v['change_pwd'] == 1 ? 'SÍ' : 'NO'; ?></td>
+            <td><?php echo $v['block_access'] == 1 ? 'SÍ' : 'NO'; ?></td>
+        </tr>
+    <?php endforeach; ?>
 </table>
 <?php else: ?>
 <div>No hay datos</div>

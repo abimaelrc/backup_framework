@@ -1,115 +1,115 @@
 <?php
 $this->headScript()
-	 ->appendFile('/js/jquery/jquery.ui.datepicker.min.js')
-	 ->appendFile('/js/jquery/jquery.ui.mouse.min.js')
-	 ->appendFile('/js/jquery/jquery.ui.slider.min.js')
-	 ->appendFile('/js/jquery/jquery.ui.button.min.js')
-	 ->appendScript('$(function() {
-			var dates = $( "#from, #to" ).datepicker({
-				dateFormat: "yy-mm-dd",
-				defaultDate: "0",
-				changeMonth: true,
-				changeYear: true,
-				numberOfMonths: 1,
-				onSelect: function( selectedDate ) {
-					var option = ( this.id == "from" ) ? "minDate" : "maxDate",
-						instance = $( this ).data( "datepicker" ),
-						date = $.datepicker.parseDate(
-							instance.settings.dateFormat ||
-							$.datepicker._defaults.dateFormat,
-							selectedDate, instance.settings );
-					dates.not( this ).datepicker( "option", option, date );
-				}
-			});
+     ->appendFile('/js/jquery/jquery.ui.datepicker.min.js')
+     ->appendFile('/js/jquery/jquery.ui.mouse.min.js')
+     ->appendFile('/js/jquery/jquery.ui.slider.min.js')
+     ->appendFile('/js/jquery/jquery.ui.button.min.js')
+     ->appendScript('$(function() {
+            var dates = $( "#from, #to" ).datepicker({
+                dateFormat: "yy-mm-dd",
+                defaultDate: "0",
+                changeMonth: true,
+                changeYear: true,
+                numberOfMonths: 1,
+                onSelect: function( selectedDate ) {
+                    var option = ( this.id == "from" ) ? "minDate" : "maxDate",
+                        instance = $( this ).data( "datepicker" ),
+                        date = $.datepicker.parseDate(
+                            instance.settings.dateFormat ||
+                            $.datepicker._defaults.dateFormat,
+                            selectedDate, instance.settings );
+                    dates.not( this ).datepicker( "option", option, date );
+                }
+            });
 
-			$( ".href-statistics" ).click(function(event){
-				event.preventDefault();
-				var fromHour = ( $( "#from_hour" ).val() == "" ) ? 0 : $( "#from_hour" ).val();
-				var toHour = ( $( "#to_hour" ).val() == "" ) ? 23 : $( "#to_hour" ).val();
-				var from = ( $( "#from" ).val() == "" ) ? "0000-00-00" : $( "#from" ).val();
-				var to = ( $( "#to" ).val() == "" ) ? from : $( "#to" ).val();
-				window.location = "/statistics/index/index"
-					+ "/" + fromHour
-					+ "/" + toHour
-					+ "/" + from
-					+ "/" + to
-					+ "/" + $( this ).next().val()
-					+ "/" + $( "#users_id" ).val();
-			});
+            $( ".href-statistics" ).click(function(event){
+                event.preventDefault();
+                var fromHour = ( $( "#from_hour" ).val() == "" ) ? 0 : $( "#from_hour" ).val();
+                var toHour = ( $( "#to_hour" ).val() == "" ) ? 23 : $( "#to_hour" ).val();
+                var from = ( $( "#from" ).val() == "" ) ? "0000-00-00" : $( "#from" ).val();
+                var to = ( $( "#to" ).val() == "" ) ? from : $( "#to" ).val();
+                window.location = "/statistics/index/index"
+                    + "/" + fromHour
+                    + "/" + toHour
+                    + "/" + from
+                    + "/" + to
+                    + "/" + $( this ).next().val()
+                    + "/" + $( "#users_id" ).val();
+            });
 
-			$( "#slider-range" ).slider({
-				range: true,
-				min: 0,
-				max: 23,
-				values: [ ' . $this->fromHour . ', ' . $this->toHour . ' ],
-				slide: function( event, ui ) {
-					$( "#from_hour" ).val( ui.values[ 0 ] );
-					$( "#to_hour" ).val( ui.values[ 1 ] );
-				}
-			});
+            $( "#slider-range" ).slider({
+                range: true,
+                min: 0,
+                max: 23,
+                values: [ ' . $this->fromHour . ', ' . $this->toHour . ' ],
+                slide: function( event, ui ) {
+                    $( "#from_hour" ).val( ui.values[ 0 ] );
+                    $( "#to_hour" ).val( ui.values[ 1 ] );
+                }
+            });
 
-			$( "#from_hour" ).val( ' . $this->fromHour . ' );
-			$( "#to_hour" ).val( ' . $this->toHour . ' );
-		});'
-	);
+            $( "#from_hour" ).val( ' . $this->fromHour . ' );
+            $( "#to_hour" ).val( ' . $this->toHour . ' );
+        });'
+    );
 ?>
 <h2>Estadísticas &amp; Reportes</h2>
 <div class="divEntireWidth">
-	<img src="/images/document-view.png" />
-	<div class="title">Fechas:</div>
+    <img src="/images/document-view.png" />
+    <div class="title">Fechas:</div>
 </div>
 
 <div class="form alignCenter">
-	<div id="hours">
-		<div id="slider-range"></div>
-		<input type="text" id="from_hour" name="from_hour" />
-		<input type="text" id="to_hour" name="to_hour" />
-	</div>
-	<div id="dates">
-		<label for="from">Desde:</label> <input type="text" id="from" name="from" value="<?php echo $this->escape($this->from); ?>" />
-		<label for="to">Hasta:</label> <input type="text" id="to" name="to" value="<?php echo $this->escape($this->to); ?>" />
-	</div>
-	<div id="users">
-		<select id="users_id" name="users_id">
-			<option value="0">[ Grupal ]</option>
-			<?php foreach($this->employees as $v): ?>
-				<?php $s = ( $this->usersId == $v['users_id'] ) ? 'selected="selected"' : null; ?>
-				<option value="<?php echo $v['users_id']; ?>" <?php echo $s; ?>><?php echo $v['name'] . ' ' . $v['num_empl']; ?></option>
-			<?php endforeach; ?>
-		</select>
-	</div>
+    <div id="hours">
+        <div id="slider-range"></div>
+        <input type="text" id="from_hour" name="from_hour" />
+        <input type="text" id="to_hour" name="to_hour" />
+    </div>
+    <div id="dates">
+        <label for="from">Desde:</label> <input type="text" id="from" name="from" value="<?php echo $this->escape($this->from); ?>" />
+        <label for="to">Hasta:</label> <input type="text" id="to" name="to" value="<?php echo $this->escape($this->to); ?>" />
+    </div>
+    <div id="users">
+        <select id="users_id" name="users_id">
+            <option value="0">[ Grupal ]</option>
+            <?php foreach($this->employees as $v): ?>
+                <?php $s = ( $this->usersId == $v['users_id'] ) ? 'selected="selected"' : null; ?>
+                <option value="<?php echo $v['users_id']; ?>" <?php echo $s; ?>><?php echo $v['name'] . ' ' . $v['num_empl']; ?></option>
+            <?php endforeach; ?>
+        </select>
+    </div>
 </div>
 
 <div class="divEntireWidth marginTop10px">
-	<img src="/images/statistics.png" />
-	<div class="title">Reportes:</div>
+    <img src="/images/statistics.png" />
+    <div class="title">Reportes:</div>
 </div>
 <div id="statistics">
-	<ul class="column">
-		<li>
-			<ul class="rows">
-				<li>
-					<a href="#" class="href-statistics">Test 1</a>
-					<input type="hidden" value="test1" />
-					<div class="description">
-						Description Test 1
-					</div>
-				</li>
-			</ul>
-		</li>
-		<!-- right list -->
-		<li>
-			<ul class="rows">
-				<li>
-					<a href="#" class="href-statistics">Test 2</a>
-					<input type="hidden" value="test1" />
-					<div class="description">
-						Description Test 2
-					</div>
-				</li>
-			</ul>
-		</li>
-	</ul>
+    <ul class="column">
+        <li>
+            <ul class="rows">
+                <li>
+                    <a href="#" class="href-statistics">Test 1</a>
+                    <input type="hidden" value="test1" />
+                    <div class="description">
+                        Description Test 1
+                    </div>
+                </li>
+            </ul>
+        </li>
+        <!-- right list -->
+        <li>
+            <ul class="rows">
+                <li>
+                    <a href="#" class="href-statistics">Test 2</a>
+                    <input type="hidden" value="test1" />
+                    <div class="description">
+                        Description Test 2
+                    </div>
+                </li>
+            </ul>
+        </li>
+    </ul>
 </div>
 
 <div class="clear"></div>

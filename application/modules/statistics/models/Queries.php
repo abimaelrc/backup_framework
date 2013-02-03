@@ -1,196 +1,180 @@
 <?php
 class Statistics_Model_Queries extends Qry_Queries
 {
-	/**
-	 * Get content dinamically
-	 *
-	 * @param $values array
-	 * @param $db Zend_Db
-	 * @param $dbQuery string Query string
-	 * @param $unsetValues array Fields that are not supose to be returned
-	 * @param $encoding string Default: ISO-8859-1
-	 *
-	 * @return string | null
-	 */
-	private function getContent(array $values = array(), $db = null, $dbQuery = null, $unsetValues = array(), $encoding = 'ISO-8859-1')
-	{
-		$content   = null;
-		$firstTime = true;
-		$values    = ( ( !empty($values) )
-				   ? $values
-				   : ( ( ( $db instanceof Zend_Db_Adapter_Pdo_Mysql
-					     || $db instanceof Zend_Db_Adapter_Pdo_Oci )
-					   && !empty($db)
-					   && !empty($dbQuery) )
-				     ? $db->fetchAll($dbQuery)
-				     : array() ));
+    /**
+     * Get content dinamically
+     *
+     * @param array $values
+     * @param Zend_Db $db
+     * @param string $dbQuery Query string
+     * @param array $unsetValues Fields that are not supose to be returned
+     *
+     * @return string|null
+     */
+    private function getContent(array $values = array(), $db = null, $dbQuery = null, $unsetValues = array())
+    {
+        $content   = null;
+        $firstTime = true;
+        $values    = (!empty($values))
+                   ? $values
+                   : (
+                       (($db instanceof Zend_Db_Adapter_Pdo_Mysql || $db instanceof Zend_Db_Adapter_Pdo_Oci) && !empty($db) && !empty($dbQuery))
+                       ? $db->fetchAll($dbQuery)
+                       : array()
+                   );
 
-		if( empty($values) === false ){
-			foreach($values as $k => $v){
-				if( empty($unsetValues) === false ){
-					foreach($unsetValues as $key => $val){
-						if( array_key_exists($val, $v) === true ){
-							unset($v[$val]);
-						}
-					}
-				}
+        if (empty($values) === false) {
+            foreach ($values as $k => $v) {
+                if (empty($unsetValues) === false) {
+                    foreach ($unsetValues as $key => $val) {
+                        if (array_key_exists($val, $v) === true) {
+                            unset($v[$val]);
+                        }
+                    }
+                }
 
-				/**
-				 * Set titles
-				 */
-				if( $firstTime === true ){
-					$content .= '"' . implode('","', array_keys($v)) . '"' . PHP_EOL;
-					$firstTime = false;
-				}
+                /**
+                 * Set titles
+                 */
+                if ($firstTime === true) {
+                    $content   .= '"' . implode('","', array_keys($v)) . '"' . PHP_EOL;
+                    $firstTime = false;
+                }
 
-				/**
-				 * Delete all returned characters and double quote change it to single
-				 */
-				foreach($v as $k => $vv){
-					$v[$k] = str_replace(array('"', PHP_EOL, "\n", "\r", ), array("'", '/'), $vv);
-				}
+                /**
+                 * Delete all returned characters and double quote change it to single
+                 */
+                foreach ($v as $k => $vv) {
+                    $v[$k] = str_replace(array('"', PHP_EOL, "\n", "\r", ), array("'", '/'), $vv);
+                }
 
-				/**
-				 * Set values
-				 */
-				$content .= '"' . implode('","', $v) . '"' . PHP_EOL;
-			}
-		}
+                /**
+                 * Set values
+                 */
+                $content .= '"' . implode('","', $v) . '"' . PHP_EOL;
+            }
+        }
 
-		return $content;
-	}
+        return $content;
+    }
 
 
 
 
-	/**
-	 * Set encoding
-	 *
-	 * @param $data string
-	 * @param $setEnding string Default: UTF-8//TRANSLIT
-	 *
-	 * @return string
-	 */
-	private function _setEncoding($data, $setEncoding = 'UTF-8//TRANSLIT')
-	{
-		$encoding = mb_detect_encoding($data);
+    /**
+     * Set encoding
+     *
+     * @param string $data
+     * @param string $setEnding Default: UTF-8//TRANSLIT
+     *
+     * @return string
+     */
+    private function setEncoding($data, $setEncoding = 'UTF-8//TRANSLIT')
+    {
+        $encoding = mb_detect_encoding($data);
+        $encoding = ($encoding !== false)
+                  ? $encoding
+                  : 'ISO-8859-1';
 
-		$encoding = ( ( $encoding !== false ) ? $encoding : 'ISO-8859-1' );
+        if (strpos($setEncoding, $encoding) === false) {
+            $data = iconv($encoding, $setEncoding, trim($data));
+        }
 
-		if( strpos($setEncoding, $encoding) === false ){
-			$data = iconv($encoding, $setEncoding, trim($data));
-		}
-
-		return $data;
-	}
-
-
-
-
-	/**
-	 * @return array filename & info
-	 */
-	public function indexQry()
-	{
-		/**
-		 * Filenames
-		 */
-		$tabName     = array( 'test1' => 'Test 1', );
-
-		/**
-		 * Filter for XSS attacks
-		 */
-		$values      = $this->filterXss($this->params, false, true);
-
-		/**
-		 * if name of type do not exists just return empty values
-		 */
-		if( array_key_exists($values['type'], $tabName) === false ){
-			return array( 'fileName' => '', 'info' => '', );
-		}
-
-		/**
-		 * Set user name and employee number
-		 */
-		$nameNumEmpl = null;
-		$user        = null;
-
-		if( empty($values['users_id']) === false ){
-			$dbQuery     = 'SELECT name, num_empl FROM users WHERE users_id = ' . $this->db->quote($values['users_id']);
-			$user        = $this->db->fetchRow($dbQuery);
-			$nameNumEmpl = ' - ' . $user['name'] . '(' . $user['num_empl'] . ')';
-		}
-
-		/**
-		 * Set part of the header with the selected days and if from and to got the same date
-		 * dispaly only 1 time the date
-		 */
-		$nameDates       = ( empty($values['to']) === false && $values['to'] != $values['from'] )
-						 ? ( $values['from'] . ' - ' . $values['to'] )
-						 : $values['from'];
-		
-
-		/**
-		 * Name of the document at the beginning of the file
-		 */
-		$info = ( ( array_key_exists($values['type'], $tabName) === true )
-			  ? $tabName[ $values['type'] ]
-			  : null )
-			  . ' ' . $nameNumEmpl . $nameDates . PHP_EOL;
-
-		/**
-		 * Unset "to" if is empty or if is the same as from to create the correct query
-		 */
-		if( empty($values['to']) === true || $values['from'] == $values['to'] ){
-			unset($values['to']);
-		}
-
-		/**
-		 * Set for specific or range dates and times
-		 */
-		$dates           = ( ( empty($values['to']) === true )
-			             ? ( ' = ' . $this->db->quote($values['from']) )
-						 : ( ' BETWEEN ' . $this->db->quote($values['from']) . ' AND ' . $this->db->quote($values['to']) ));
-		$timeStart 		 = intval($values['from_hour']);
-		$timeEnd   		 = intval($values['to_hour']);
-
-		/**
-		 * Set filename
-		 */
-		$fileName 		 = str_replace(' ', '_', $tabName[ $values['type'] ]) . '_'
-						 . ( ( empty($values['to']) === true )
-						   ? $values['from']
-						   : ( $values['from'] . '_' . $values['to'] ) )
-						 . ( ( empty($user) === false )
-						   ? str_replace(' ', '_', ( $user['name'] . '_' . $user['num_empl'] ) )
-						   : null );
+        return $data;
+    }
 
 
 
 
+    /**
+     * @return array filename & info
+     */
+    public function indexQry()
+    {
+        /**
+         * Filenames
+         */
+        $tabName = array(
+            'test1' => 'Test 1',
+        );
 
+        /**
+         * Filter for XSS attacks
+         */
+        $values  = $this->filterXss($this->params, false, true);
 
+        /**
+         * if name of type do not exists just return empty values
+         */
+        if (array_key_exists($values['type'], $tabName) === false) {
+            return array(
+                'fileName' => '',
+                'info'     => '',
+            );
+        }
 
+        /**
+         * Set user name and employee number
+         */
+        $nameNumEmpl = null;
+        $user        = null;
 
+        if (empty($values['users_id']) === false) {
+            $dbQuery     = 'SELECT name, num_empl FROM users WHERE users_id = ' . $this->db->quote($values['users_id']);
+            $user        = $this->db->fetchRow($dbQuery);
+            $nameNumEmpl = ' - ' . $user['name'] . '(' . $user['num_empl'] . ')';
+        }
 
-		/**
-		 * Data for "Test 1"
-		 */
-		if( $values['type'] == 'test1' ){
-			/**
-			 * Delete next line and fix the query, is just an example
-			 */
-			goto skip;
+        /**
+         * Set part of the header with the selected days and if from and to got the same date
+         * dispaly only 1 time the date
+         */
+        $nameDates       = (empty($values['to']) === false && $values['to'] != $values['from'])
+                         ? ($values['from'] . ' - ' . $values['to'])
+                         : $values['from'];
+        
 
-			$dbQuery = 'SELECT * FROM table
-						WHERE DATE_FORMAT(created_datetime, "%Y-%m-%d") ' . $dates
-						      . ' AND DATE_FORMAT(created_datetime, "%H") >= ' . $timeStart
-						      . ' AND DATE_FORMAT(created_datetime, "%H") <= ' . $timeEnd
-						      . ( !empty($values['users_id']) ? ( ' AND created_by = ' . $this->db->quote($values['users_id']) ) : '' );
-			$rows    = $this->db->fetchAll($dbQuery);
+        /**
+         * Name of the document at the beginning of the file
+         */
+        $info            = (
+                             (array_key_exists($values['type'], $tabName) === true)
+                             ? $tabName[ $values['type'] ]
+                             : null
+                         )
+                         . ' ' . $nameNumEmpl . $nameDates . PHP_EOL;
 
-			$info    .= $this->getContent(array(), $this->db, $rows);
-		}
+        /**
+         * Unset "to" if is empty or if is the same as from to create the correct query
+         */
+        if( empty($values['to']) === true || $values['from'] == $values['to'] ){
+            unset($values['to']);
+        }
+
+        /**
+         * Set for specific or range dates and times
+         */
+        $dates     = ( empty($values['to']) === true )
+                   ? (' = ' . $this->db->quote($values['from']))
+                   : (' BETWEEN ' . $this->db->quote($values['from']) . ' AND ' . $this->db->quote($values['to']));
+        $timeStart = intval($values['from_hour']);
+        $timeEnd   = intval($values['to_hour']);
+
+        /**
+         * Set filename
+         */
+        $fileName  = str_replace(' ', '_', $tabName[ $values['type'] ])
+                   . '_'
+                   . (
+                       (empty($values['to']) === true)
+                       ? $values['from']
+                       : ( $values['from'] . '_' . $values['to'] )
+                   )
+                   . (
+                       ( empty($user) === false)
+                       ? str_replace(' ', '_', ( $user['name'] . '_' . $user['num_empl'] ) )
+                       : null
+                   );
 
 
 
@@ -200,28 +184,57 @@ class Statistics_Model_Queries extends Qry_Queries
 
 
 
-		/**
-		 * Delete next line
-		 */
-		skip:
+        /**
+         * Data for "Test 1"
+         */
+        if( $values['type'] == 'test1' ){
+            /**
+             * Delete next line and fix the query, is just an example
+             */
+            goto skip;
 
-		return array( 'fileName' => $fileName, 'info' => $this->_setEncoding($info, 'ISO-8859-1//TRANSLIT'), );
-	}
+            $dbQuery = 'SELECT * FROM table
+                        WHERE DATE_FORMAT(created_datetime, "%Y-%m-%d") ' . $dates
+                              . ' AND DATE_FORMAT(created_datetime, "%H") >= ' . $timeStart
+                              . ' AND DATE_FORMAT(created_datetime, "%H") <= ' . $timeEnd
+                              . ( !empty($values['users_id']) ? ( ' AND created_by = ' . $this->db->quote($values['users_id']) ) : '' );
+            $rows    = $this->db->fetchAll($dbQuery);
+            $info    .= $this->getContent(array(), $this->db, $rows);
+        }
 
 
 
 
-	/**
-	 * Get employees that worked in application
-	 * Set to only get role user
-	 *
-	 * @return array
-	 */
-	public function getEmployeesQry()
-	{
-		$dbQuery = 'SELECT users_id, name, num_empl FROM users
-					WHERE ( deleted_account = 0 OR deleted_account IS NULL ) AND role = "user" 
-					ORDER BY name';
-		return $this->db->fetchAll($dbQuery);
-	}
+
+
+
+
+
+        /**
+         * Delete next line
+         */
+        skip:
+
+        return array(
+            'fileName' => $fileName,
+            'info'     => $this->setEncoding($info, 'ISO-8859-1//TRANSLIT'),
+        );
+    }
+
+
+
+
+    /**
+     * Get employees that worked in application
+     * Set to only get role user
+     *
+     * @return array
+     */
+    public function getEmployeesQry()
+    {
+        $dbQuery = 'SELECT users_id, name, num_empl FROM users
+                    WHERE ( deleted_account = 0 OR deleted_account IS NULL ) AND role = "user" 
+                    ORDER BY name';
+        return $this->db->fetchAll($dbQuery);
+    }
 }

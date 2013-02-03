@@ -2,96 +2,93 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-US">
 <head>
 <?php
-	$request = Zend_Controller_Front::getInstance()->getRequest();
-	$url     = '/' . $request->getModuleName()
-	         . '/' . $request->getControllerName()
-	         . '/' . $request->getActionName();
-	echo $this->headTitle();
-	echo $this->headMeta();
-	echo $this->headLink( array( 'rel' => 'favicon',
-								 'href' => '/favicon.ico' ),
-						  'PREPEND' )
-			  ->appendStylesheet('/style.css')
-			  ->appendStylesheet('/style-ie.css', 'screen', 'IE')
-			  ->appendStylesheet('/css-jquery/jquery.ui.all.css');
-	echo $this->headScript()
-			  ->prependFile('/js/script.js')
-			  ->prependFile('/js/ajax.js')
-			  ->prependFile('/js/jquery/jquery.ui.widget.min.js')
-			  ->prependFile('/js/jquery/jquery.ui.effect.min.js')
-			  ->prependFile('/js/jquery/jquery.ui.core.min.js')
-			  ->prependFile('/js/jquery/jquery-1.8.2.js')
-			  ->appendScript('$(function(){
-					if( "' . $url . '" != "' . $this->url(array(), "configure") . '" ){
-						$( ".name-user" )
-							.mouseover(function(){
-								$( this ).addClass( "name-user-hover" );
-							})
-							.mouseout(function(){
-								$( this ).removeClass( "name-user-hover" );
-							});
-					}
-					$( ".settings" )
-						.mouseover(function(){
-							$( this ).find( "img" ).attr({ src: "/images/setting_selected.png" });
-							$( this ).addClass( "settings-hover" );
-						})
-						.mouseout(function(){
-							$( this ).find( "img" ).attr({ src: "/images/setting_normal.png" });
-							$( this ).removeClass( "settings-hover" );
-						})
-						.click(function(){
-							$( this ).find( "#settings-info" ).toggle();
-						});
-					$( "#logout" )
-						.mouseover(function(){
-							$( this ).find( "img" ).attr({ src: "/images/iconClose_selected.png" });
-							$( this ).addClass( "logout-hover" );
-						})
-						.mouseout(function(){
-							$( this ).find( "img" ).attr({ src: "/images/iconClose.png" });
-							$( this ).removeClass( "logout-hover" );
-						});
-			  });');
+    $request = Zend_Controller_Front::getInstance()->getRequest();
+    $url     = '/' . $request->getModuleName()
+             . '/' . $request->getControllerName()
+             . '/' . $request->getActionName();
+    echo $this->headTitle();
+    echo $this->headMeta();
+    echo $this->headLink(array('rel' => 'favicon', 'href' => '/favicon.ico'), 'PREPEND')
+              ->appendStylesheet('/style.css')
+              ->appendStylesheet('/style-ie.css', 'screen', 'IE')
+              ->appendStylesheet('/css-jquery/jquery.ui.all.css');
+    echo $this->headScript()
+              ->prependFile('/js/ajax.js')
+              ->prependFile('/js/jquery/jquery.ui.widget.min.js')
+              ->prependFile('/js/jquery/jquery.ui.effect.min.js')
+              ->prependFile('/js/jquery/jquery.ui.core.min.js')
+              ->prependFile('/js/jquery/jquery-1.8.2.js')
+              ->appendScript('$(function(){
+                    if( "' . $url . '" != "' . $this->url(array(), "configure") . '" ){
+                        $( ".name-user" )
+                            .mouseover(function(){
+                                $( this ).addClass( "name-user-hover" );
+                            })
+                            .mouseout(function(){
+                                $( this ).removeClass( "name-user-hover" );
+                            });
+                    }
+                    $( ".settings" )
+                        .mouseover(function(){
+                            $( this ).find( "img" ).attr({ src: "/images/setting_selected.png" });
+                            $( this ).addClass( "settings-hover" );
+                        })
+                        .mouseout(function(){
+                            $( this ).find( "img" ).attr({ src: "/images/setting_normal.png" });
+                            $( this ).removeClass( "settings-hover" );
+                        })
+                        .click(function(){
+                            $( this ).find( "#settings-info" ).toggle();
+                        });
+                    $( "#logout" )
+                        .mouseover(function(){
+                            $( this ).find( "img" ).attr({ src: "/images/iconClose_selected.png" });
+                            $( this ).addClass( "logout-hover" );
+                        })
+                        .mouseout(function(){
+                            $( this ).find( "img" ).attr({ src: "/images/iconClose.png" });
+                            $( this ).removeClass( "logout-hover" );
+                        });
+              });');
 ?>
 </head>
 <body>
 <div id="wrap">
-	<div id="header">
-		<div id="menu">
-			<?php $mainNav = $this->navigation()->findOneByLabel('main nav'); ?>
-			<?php echo $this->navigation()->menu()->renderMenu($mainNav); ?>
+    <div id="header">
+        <div id="menu">
+            <?php $mainNav = $this->navigation()->findOneByLabel('main nav'); ?>
+            <?php echo $this->navigation()->menu()->renderMenu($mainNav); ?>
 
-			<div id="logout"><a href="<?php echo $this->url(array(), "logout"); ?>"><img src="/images/iconClose.png" title="Salir" /></a></div>
+            <div id="logout"><a href="<?php echo $this->url(array(), "logout"); ?>"><img src="/images/iconClose.png" title="Salir" /></a></div>
 
-			<div class="settings">
-				<img src="/images/setting_normal.png" title="Configuración" />
-				<?php $settingNav = $this->navigation()->findOneByLabel('settings nav'); ?>
-				<div id="settings-info">
-					<?php echo $this->navigation()->menu()->renderMenu($settingNav); ?>
-					<div class="clear"></div>
-				</div>
-			</div>
+            <div class="settings">
+                <img src="/images/setting_normal.png" title="Configuración" />
+                <?php $settingNav = $this->navigation()->findOneByLabel('settings nav'); ?>
+                <div id="settings-info">
+                    <?php echo $this->navigation()->menu()->renderMenu($settingNav); ?>
+                    <div class="clear"></div>
+                </div>
+            </div>
 
-			<div class="name-user <?php echo ( $url == $this->url(array(), "configure") ) ? "name-user-hover" : ""; ?>">
-				<a href="/configure"><?php echo Zend_Auth::getInstance()->getStorage()->read()->name; ?></a>
-			</div>
-			<div class="clear"></div>
-		</div>
-	</div>
-	<div id="content">
-		<div id="logo"><a href="/"><img src="/images/logo.png" title="Claro" /></a></div>
-		<div id="mainContent">
-			<?php if( empty($this->message) ===  false ): ?>
-				<div class="message"><?php echo nl2br(trim($this->message)); ?></div>
-			<?php endif; ?>
-			<?php echo $this->layout()->content; ?>
-		</div>
-	</div>
+            <div class="name-user <?php echo ( $url == $this->url(array(), "configure") ) ? "name-user-hover" : ""; ?>">
+                <a href="/configure"><?php echo Zend_Auth::getInstance()->getStorage()->read()->name; ?></a>
+            </div>
+            <div class="clear"></div>
+        </div>
+    </div>
+    <div id="content">
+        <div id="logo"><a href="/"><img src="/images/logo.png" title="Claro" /></a></div>
+        <div id="mainContent">
+            <?php if( empty($this->message) ===  false ): ?>
+                <div class="message"><?php echo nl2br(trim($this->message)); ?></div>
+            <?php endif; ?>
+            <?php echo $this->layout()->content; ?>
+        </div>
+    </div>
 </div>
 
 <div id="copyright">
-	<div>&copy; <?php echo date('Y'); ?> (Alpha)</div>
+    <div>&copy; <?php echo date('Y'); ?> (Alpha)</div>
 </div>
 
 </body>

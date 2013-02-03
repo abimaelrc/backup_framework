@@ -8,8 +8,12 @@ class Authentication_Form_Login extends Zend_Form
          **************************/
         $this->setMethod('post')
              ->setAttrib('accept-charset', 'utf-8')
-             ->setDecorators( array( 'FormElements',
-                                    'Form', ));
+             ->setDecorators(
+                 array(
+                     'FormElements',
+                     'Form',
+                 )
+             );
 
 
 
@@ -20,8 +24,12 @@ class Authentication_Form_Login extends Zend_Form
         $hash = new Zend_Form_Element_Hash('hashLogin');
         $hash->setSalt('login')
              ->setTimeout(Extras_Config::getOption('hashTimeout', 'additionalParams', true))
-             ->setDecorators( array( array('Errors', array('class'=>'errorsHash', 'escape'=>false)),
-                                     'ViewHelper', ));
+             ->setDecorators(
+                 array(
+                     array('Errors', array('class'=>'errorsHash', 'escape'=>false)),
+                     'ViewHelper',
+                 )
+             );
         $this->addElement($hash);
 
 
@@ -34,10 +42,14 @@ class Authentication_Form_Login extends Zend_Form
         $numEmpl->setLabel('Número Empleado:')
                 ->setOptions(array('size' => 30))
                 ->setRequired(true)
-                ->setDecorators( array( 'Description',
-                                        'Errors',
-                                        'ViewHelper',
-                                        'Label', ))
+                ->setDecorators(
+                    array(
+                        'Description',
+                        'Errors',
+                        'ViewHelper',
+                        'Label',
+                    )
+                )
                 ->addFilter('StripTags')
                 ->addFilter('StringTrim')
                 ->addFilter(new Filter_MbStrToUpper());
@@ -53,10 +65,14 @@ class Authentication_Form_Login extends Zend_Form
         $pwd->setLabel('Contraseña:')
             ->setOptions(array( 'size' => 30, ))
             ->setRequired(true)
-            ->setDecorators( array( 'Description',
-                                    'Errors',
-                                    'ViewHelper',
-                                    'Label', ))
+            ->setDecorators(
+                array(
+                    'Description',
+                    'Errors',
+                    'ViewHelper',
+                    'Label',
+                )
+            )
             ->addFilter('StripTags')
             ->addFilter('StringTrim');
         $this->addElement($pwd);
@@ -70,8 +86,12 @@ class Authentication_Form_Login extends Zend_Form
         $submit = new Zend_Form_Element_Submit('submit');
         $submit->setLabel('Log In')
               ->setOptions(array('class' => 'submit'))
-              ->setDecorators( array( 'ViewHelper',
-                                      array('HtmlTag', array('tag'=>'div', 'class'=>'marginTop10px alignCenter')), ));
+              ->setDecorators(
+                  array(
+                      'ViewHelper',
+                      array('HtmlTag', array('tag'=>'div', 'class'=>'marginTop10px alignCenter')),
+                  )
+              );
         $this->addElement($submit);
     }
 }

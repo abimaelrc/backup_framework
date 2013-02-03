@@ -3,6 +3,15 @@
 class Extras_Config
 {
     /**
+     * @params Zend_Config $options
+     * @return array
+     */
+    public static function getOptions(Zend_Config $options)
+    {
+        return $options->toArray();
+    }
+
+    /**
      * @param array|string $keys
      * @param $registryKey
      * @param $singleValue
@@ -36,7 +45,7 @@ class Extras_Config
         foreach ($keys as $key => $keyValue) {
             if (array_key_exists($key, $registry) === true && is_array($keyValue) === true) {
                 $result[] = $getOptionArrayRecursive($keyValue, $registry[$key]);
-            } elseif (is_array($keyValue) === false) {
+            } elseif (array_key_exists($keyValue, $registry) === true && is_array($keyValue) === false) {
                 $result[] = $registry[$keyValue];
             }
         }
