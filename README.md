@@ -5,4 +5,4 @@
 See ```test.sql``` is found in ```/docs``` directory
 
 ### INSTALLATION
-Please refer to INSTALL.md
+Please see INSTALL.md
