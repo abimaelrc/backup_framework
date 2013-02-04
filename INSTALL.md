@@ -20,7 +20,7 @@ NameVirtualHost localhost:1234
 </VirtualHost>
 ```
 - Create file ```/library/Db/Config.php``` with class ```Db_Config``` and the method ```config``` must return what is mention in the comments in file ```/library/Db/Db.php```
-- Create database with the same you set in your ```/library/Db/Config.php``` file
+- Create database with the same name you set in your ```/library/Db/Config.php``` file
 - Modify variables ```additionalParams``` in file ```/application/configs/application.ini``` with what you want
 - Modify variables in file ```/public/install.php``` with what you want
 - Write in url ```http://<HOST_OR_IP>/install.php```
