@@ -11,8 +11,8 @@ class Extras_Session
         Zend_Session::start();
 
         $sessionOptions = array();
-        if (empty($options['production']['session']) === false) {
-            $sessionOptions = $options['production']['session'];
+        if (empty($options['session']) === false) {
+            $sessionOptions = $options['session'];
             $sessionOptions['strict'] = (isset($sessionOptions['strict']) === true) ? (boolean)$sessionOptions['strict'] : false;
 
             /**

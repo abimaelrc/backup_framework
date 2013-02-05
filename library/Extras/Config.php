@@ -44,9 +44,9 @@ class Extras_Config
 
         foreach ($keys as $key => $keyValue) {
             if (array_key_exists($key, $registry) === true && is_array($keyValue) === true) {
-                $result[] = $getOptionArrayRecursive($keyValue, $registry[$key]);
+                $result[$key] = $getOptionArrayRecursive($keyValue, $registry[$key]);
             } elseif (array_key_exists($keyValue, $registry) === true && is_array($keyValue) === false) {
-                $result[] = $registry[$keyValue];
+                $result[$keyValue] = $registry[$keyValue];
             }
         }
 
