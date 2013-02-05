@@ -39,6 +39,7 @@
                         })
                         .click(function(){
                             $( this ).find( "#settings-info" ).toggle();
+							$( this ).find( "#pointer" ).toggle();
                         });
                     $( "#logout" )
                         .mouseover(function(){
@@ -64,6 +65,7 @@
             <div class="settings">
                 <img src="/images/setting_normal.png" title="Configuración" />
                 <?php $settingNav = $this->navigation()->findOneByLabel('settings nav'); ?>
+                <div id="pointer"></div>
                 <div id="settings-info">
                     <?php echo $this->navigation()->menu()->renderMenu($settingNav); ?>
                     <div class="clear"></div>
