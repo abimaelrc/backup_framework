@@ -3,10 +3,11 @@ class Extras_Session
 {
     /**
      * @param array $options
-     * @param int $sessionExpire Default 1440 = 24 minutes
+     * @param int $sessionExpire
+     * @param null|string $sessionNamespace
      * @return Zend_Session_Namespace
      */
-    public static function sessionNamespace(array $options = array(), $sessionExpire = 1440, $sessionNamespace = null)
+    public static function sessionNamespace(array $options = array(), $sessionExpire = 0, $sessionNamespace = null)
     {
         Zend_Session::start();
 
@@ -18,15 +19,19 @@ class Extras_Session
             /**
              * Setup the same gc_maxlifetime
              */
-            if (empty($sessionOptions['gc_maxlifetime']) === false) {
+            if (empty($sessionOptions['gc_maxlifetime']) === false && empty($sessionExpire) === true) {
                 $sessionExpire = $sessionOptions['gc_maxlifetime'];
             }
         }
         Zend_Session::setOptions($sessionOptions);
 
+        $sessionExpire    = (empty($sessionExpire) === true)
+                          ? 1440
+                          : $sessionExpire;
         $sessionNamespace = (empty($sessionNamespace) === true)
                           ? Extras_Config::getOption('sessionNamespace', 'additionalParams', true)
                           : $sessionNamespace;
+
         $session = new Zend_Session_Namespace($sessionNamespace);
         $session->setExpirationSeconds($sessionExpire);
 

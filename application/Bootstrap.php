@@ -14,7 +14,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
      */
     protected function _initSession()
     {
-        Extras_Session::sessionNamespace(Extras_Config::getOption('session'), 1440);
+        Extras_Session::sessionNamespace(Extras_Config::getOption('session'));
     }
 
     /**
