@@ -13,8 +13,8 @@ class Authentication_IndexController extends Zend_Controller_Action
     {
         $session    = Extras_Session::getSessionNamespace();
         $requestURL = (
-                          empty($session->requestURL) === false
-                          && $session->requestURL != ('/' . $this->_request->module . '/' . $this->_request->controller . '/' . $this->_request->action)
+                        empty($session->requestURL) === false
+                        && $session->requestURL != ('/' . $this->_request->module . '/' . $this->_request->controller . '/' . $this->_request->action)
                       )
                     ? $session->requestURL
                     : $this->view->url(array(), 'default-index');

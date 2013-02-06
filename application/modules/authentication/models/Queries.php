@@ -6,7 +6,7 @@ class Authentication_Model_Queries extends Qry_Queries
      */
     public function loginQry()
     {
-        $authAdapter      = new Zend_Auth_Adapter_DbTable($this->db);
+        $authAdapter = new Zend_Auth_Adapter_DbTable($this->db);
         $authAdapter->setTableName('users')
                     ->setIdentityColumn('num_empl')
                     ->setCredentialColumn('pwd');
@@ -16,12 +16,13 @@ class Authentication_Model_Queries extends Qry_Queries
 
         $result = $this->auth->authenticate($authAdapter);
 
-        if($result->isValid()){
+        if ($result->isValid() === true) {
             $userInfo = $authAdapter->getResultRowObject();
             $this->auth->getStorage()->write($userInfo);
 
             return true;
         }
+
         $this->setMessage('Usuario o contraseña incorrecta. Por favor trata nuevamente');
 
         return false;
@@ -45,7 +46,7 @@ class Authentication_Model_Queries extends Qry_Queries
 
         $result = $this->auth->authenticate($authAdapter);
 
-        if($result->isValid()){
+        if($result->isValid() === true){
             $userInfo = $authAdapter->getResultRowObject();
             $this->auth->getStorage()->write($userInfo);
 

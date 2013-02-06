@@ -3,15 +3,16 @@ class Authentication_Model_Acl extends Zend_Acl
 {
     public function __construct()
     {
-        $db = Db_Db::conn();
+        $db      = Db_Db::conn();
         $dbQuery = 'SELECT * FROM urls ORDER BY module, urls_id';
-        foreach($db->fetchAll($dbQuery) as $u){
-            if($u['parent'] == $u['urls_id']){
+
+        foreach ($db->fetchAll($dbQuery) as $u) {
+            if ($u['parent'] == $u['urls_id']) {
                 //echo $u['module'] . '<br />';
                 //echo $u['module'] . ':' . $u['controller'] . ':' . $u['action'] . ',' . $u['module'] . '<br />';
                 $this->add(new Zend_Acl_Resource($u['module']));
                 $this->add(new Zend_Acl_Resource($u['module'] . ':' . $u['controller'] . ':' . $u['action']), $u['module']);
-            }else{
+            } else {
                 //echo $u['module'] . ':' . $u['controller'] . ':' . $u['action'] . ',' . $u['module'] . '<br />';
                 $this->add(new Zend_Acl_Resource($u['module'] . ':' . $u['controller'] . ':' . $u['action']), $u['module']);
             }

@@ -1,12 +1,16 @@
-<?php echo $this->doctype() . PHP_EOL; ?>
+<?php echo $this->doctype(); ?>
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-US">
 <head>
 <?php
     echo $this->headTitle();
     echo $this->headMeta();
-    echo $this->headLink( array( 'rel' => 'favicon',
-                                 'href' => '/favicon.ico' ),
-                          'PREPEND' )
+    echo $this->headLink(
+                   array(
+                       'rel' => 'favicon',
+                       'href' => '/favicon.ico'
+                   ),
+                   'PREPEND'
+              )
               ->appendStylesheet('/style-ie.css', 'screen', 'IE')
               ->appendStylesheet('/style.css');
     echo $this->headScript()

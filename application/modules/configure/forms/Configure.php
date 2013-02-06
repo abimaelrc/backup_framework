@@ -1,14 +1,27 @@
 <?php
 class Configure_Form_Configure extends Zend_Form
 {
+    /**
+     * @var string
+     */
     private $name;
+
+    /**
+     * @var string
+     */
     private $numEmpl;
 
+    /**
+     * @param string $name
+     */
     public function setName($name)
     {
         $this->name = $name;
     }
 
+    /**
+     * @param string $numEmpl
+     */
     public function setNumEmpl($numEmpl)
     {
         $this->numEmpl = $numEmpl;

@@ -4,7 +4,7 @@ class Configure_Form_ConfigureUsersEdit extends Zend_Form
     public function init()
     {
         /***************************
-         *                      form
+         *                      Db_Db::conn()
          **************************/
         $db = Db_Db::conn();
 

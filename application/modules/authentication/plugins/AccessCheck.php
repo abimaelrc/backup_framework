@@ -1,21 +1,30 @@
 <?php
 class Authentication_Plugin_AccessCheck extends Zend_Controller_Plugin_Abstract
 {
+    /**
+     * @var Zend_Acl
+     */
     private $acl;
+
+    /**
+     * @var Zend_Auth
+     */
     private $auth;
 
-
-
-
+    /**
+     * @param Zend_Acl $acl
+     * @param Zend_Auth $auth
+     */
     public function __construct(Zend_Acl $acl, Zend_Auth $auth)
     {
         $this->acl  = $acl;
         $this->auth = $auth;
     }
 
-
-
-
+    /**
+     * @param Zend_Controller_Request_Abstract $request
+     * @return void
+     */
     public function preDispatch(Zend_Controller_Request_Abstract $request)
     {
         $module     = $request->getModuleName();

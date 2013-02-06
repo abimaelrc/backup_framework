@@ -1,6 +1,9 @@
 <?php
 class Application_Plugin_Headers extends Zend_Controller_Plugin_Abstract
 {
+    /**
+     * @param Zend_Controller_Request_Abstract $request
+     */
     public function routeStartup(Zend_Controller_Request_Abstract $request)
     {
         $response = $this->getResponse();

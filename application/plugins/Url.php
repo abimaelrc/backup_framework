@@ -4,10 +4,10 @@ class Application_Plugin_Url extends Zend_Controller_Plugin_Abstract
     private $router;
     private $db;
     private $delimiter;
- 
 
-
-
+    /**
+     * @param string $delimiter
+     */
     public function __construct($delimiter = '/')
     {
         $this->router    = Zend_Controller_Front::getInstance()->getRouter();
@@ -15,9 +15,9 @@ class Application_Plugin_Url extends Zend_Controller_Plugin_Abstract
         $this->delimiter = $delimiter;
     }
 
-
-
-
+    /**
+     * @param Zend_Controller_Request_Abstract $request
+     */
     public function routeStartup(Zend_Controller_Request_Abstract $request)
     {
         foreach($this->db->fetchAll('SELECT * FROM urls') as $url){

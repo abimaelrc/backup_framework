@@ -16,6 +16,7 @@ class Authentication_Bootstrap extends Zend_Application_Module_Bootstrap
     {
         $auth = Zend_Auth::getInstance();
         $auth->setStorage(Extras_Session::storageNamespace());
+
         return $auth;
     }
 
@@ -25,6 +26,7 @@ class Authentication_Bootstrap extends Zend_Application_Module_Bootstrap
     protected function _initFront()
     {
         $this->bootstrap('frontController');
+
         return $this->getResource('frontController');
     }
 
@@ -35,7 +37,8 @@ class Authentication_Bootstrap extends Zend_Application_Module_Bootstrap
     {
         $appBootstrap = $this->getApplication();
         $appBootstrap->bootstrap('layout');
-        $layout       = $appBootstrap->getResource('layout');
+        $layout = $appBootstrap->getResource('layout');
+
         return $layout->getView();
     }
 

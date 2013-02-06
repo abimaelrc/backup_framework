@@ -26,10 +26,20 @@ class Authentication_Plugin_Navigation extends Zend_Controller_Plugin_Abstract
      */
     private $checkFullPath;
 
-
-
-
-    public function __construct(Zend_Acl $acl, Zend_Auth $auth, Zend_View $view, Zend_Navigation $navigation, $checkFullPath = true){
+    /**
+     * @param Zend_Acl $acl
+     * @param Zend_Auth $auth
+     * @param Zend_View $view
+     * @param Zend_Navigation $navigation
+     * @param boolean $checkFullPath
+     */
+    public function __construct(
+        Zend_Acl $acl,
+        Zend_Auth $auth,
+        Zend_View $view,
+        Zend_Navigation $navigation,
+        $checkFullPath = true
+    ){
         $this->acl           = $acl;
         $this->auth          = $auth;
         $this->view          = $view;
@@ -37,9 +47,9 @@ class Authentication_Plugin_Navigation extends Zend_Controller_Plugin_Abstract
         $this->checkFullPath = $checkFullPath;
     }
 
-
-
-
+    /**
+     * @param Zend_Controller_Request_Abstract $request
+     */
     public function preDispatch(Zend_Controller_Request_Abstract $request)
     {
         $uriModule     = null;
