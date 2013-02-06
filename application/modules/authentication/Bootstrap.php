@@ -39,6 +39,9 @@ class Authentication_Bootstrap extends Zend_Application_Module_Bootstrap
         return $layout->getView();
     }
 
+    /**
+     * Verify access of current user
+     */
     protected function _initAccessCheck()
     {
         $this->getResource('front')->registerPlugin(
@@ -46,6 +49,9 @@ class Authentication_Bootstrap extends Zend_Application_Module_Bootstrap
         );
     }
 
+    /**
+     * Zend_Navigation
+     */
     protected function _initNavigation()
     {
         $xmlUrl = APPLICATION_PATH . '/configs/navigation.xml';

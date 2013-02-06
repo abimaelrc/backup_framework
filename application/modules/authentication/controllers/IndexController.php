@@ -11,7 +11,7 @@ class Authentication_IndexController extends Zend_Controller_Action
 
     public function indexAction()
     {
-        $session    = Extras_Session::sessionNamespace();
+        $session    = Extras_Session::getSessionNamespace();
         $requestURL = (
                           empty($session->requestURL) === false
                           && $session->requestURL != ('/' . $this->_request->module . '/' . $this->_request->controller . '/' . $this->_request->action)
@@ -25,10 +25,10 @@ class Authentication_IndexController extends Zend_Controller_Action
         }
 
         $qry  = new Authentication_Model_Queries();
-
         $form = new Authentication_Form_Login();
         $form->setAction($this->view->url(array(), 'login'));
         $this->view->form = $form;
+
         if (empty($session->flashMessenger) === true) {
             $this->view->message = $session->flashMessenger;
             unset($session->flashMessenger);

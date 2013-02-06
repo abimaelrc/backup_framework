@@ -52,4 +52,20 @@ class Extras_Session
 
         return $session;
     }
+
+    /**
+     * @param string $sessionNamespace
+     * @param int $sessionExpire
+     * @return Zend_Session_Namespace
+     */
+    public static function getSessionNamespace($sessionNamespace = null, $sessionExpire = 1440)
+    {
+        $sessionNamespace = (empty($sessionNamespace) === true)
+                          ? Extras_Config::getOption('sessionNamespace', 'additionalParams', true)
+                          : $sessionNamespace;
+        $session = new Zend_Session_Namespace($sessionNamespace);
+        $session->setExpirationSeconds($sessionExpire);
+
+        return $session;
+    }
 }
