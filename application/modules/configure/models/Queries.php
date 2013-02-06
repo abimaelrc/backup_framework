@@ -74,7 +74,7 @@ class Configure_Model_Queries extends Qry_Queries
         $post['updated_by']             = $this->getSpecificUserInfo('users_id');
         $post['updated_datetime']       = date('Y-m-d H:i:s');
         $post['updated_by_remote_addr'] = $_SERVER['REMOTE_ADDR'];
-        if (array_key_exists('pwd', $post)) {
+        if (array_key_exists('pwd', $post) === true) {
             $post['pwd'] = crypt($post['pwd'], Extras_Config::getOption('salt', 'additionalParams', true));
         }
 
@@ -116,7 +116,7 @@ class Configure_Model_Queries extends Qry_Queries
                  ? $this->chkParam('users_id')
                  : null;
 
-        if (is_null($usersId)) {
+        if (is_null($usersId) === true) {
             return false;
         }
 
@@ -139,9 +139,10 @@ class Configure_Model_Queries extends Qry_Queries
             }
         }
 
-        if (!empty($post['pwd'])) {
+        if (empty($post['pwd']) === false) {
             $post['pwd'] = crypt($post['pwd'], Extras_Config::getOption('salt', 'additionalParams', true));
         }
+
         $post['updated_by']             = $this->getSpecificUserInfo('users_id');
         $post['updated_datetime']       = date('Y-m-d H:i:s');
         $post['updated_by_remote_addr'] = Zend_Controller_Front::getInstance()->getRequest()->getServer('REMOTE_ADDR');
@@ -149,7 +150,7 @@ class Configure_Model_Queries extends Qry_Queries
                                         ? $post['in_charge']
                                         : null;
 
-        if (!empty($post['block_access'])) {
+        if (empty($post['block_access']) === false) {
             $post['block_by']             = $this->getSpecificUserInfo('users_id');
             $post['block_datetime']       = date('Y-m-d H:i:s');
             $post['block_by_remote_addr'] = Zend_Controller_Front::getInstance()->getRequest()->getServer('REMOTE_ADDR');

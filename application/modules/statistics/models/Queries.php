@@ -15,13 +15,13 @@ class Statistics_Model_Queries extends Qry_Queries
     {
         $content   = null;
         $firstTime = true;
-        $values    = (!empty($values))
-                   ? $values
-                   : (
-                       (($db instanceof Zend_Db_Adapter_Pdo_Mysql || $db instanceof Zend_Db_Adapter_Pdo_Oci) && !empty($db) && !empty($dbQuery))
-                       ? $db->fetchAll($dbQuery)
-                       : array()
-                   );
+        if (
+            ($db instanceof Zend_Db_Adapter_Pdo_Mysql || $db instanceof Zend_Db_Adapter_Pdo_Oci)
+            && empty($db) === false
+            && empty($dbQuery) === false
+        ) {
+            $values = $db->fetchAll($dbQuery);
+        }
 
         if (empty($values) === false) {
             foreach ($values as $k => $v) {

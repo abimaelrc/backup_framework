@@ -13,8 +13,10 @@ class Extras_Session
 
         $sessionOptions = array();
         if (empty($options['session']) === false) {
-            $sessionOptions = $options['session'];
-            $sessionOptions['strict'] = (isset($sessionOptions['strict']) === true) ? (boolean)$sessionOptions['strict'] : false;
+            $sessionOptions           = $options['session'];
+            $sessionOptions['strict'] = (isset($sessionOptions['strict']) === true)
+                                      ? (boolean)$sessionOptions['strict']
+                                      : false;
 
             /**
              * Setup the same gc_maxlifetime

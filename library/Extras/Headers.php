@@ -45,6 +45,9 @@ class Extras_Headers
            ->setHeader('Accept-Ranges', 'bytes')
            ->setHeader('Content-Disposition', 'attachment; filename="' . $fileName . '.xls"');
 
+        /**
+         * IE | Opera header
+         */
         if (
             isset($_SERVER['HTTP_USER_AGENT']) === true
             && (

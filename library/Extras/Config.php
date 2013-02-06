@@ -3,15 +3,6 @@
 class Extras_Config
 {
     /**
-     * @params Zend_Config $options
-     * @return array
-     */
-    public static function getOptions(Zend_Config $options)
-    {
-        return $options->toArray();
-    }
-
-    /**
      * @param array|string $keys
      * @param string $registryKey
      * @param boolean $returnFirstValue

@@ -24,9 +24,9 @@ class Qry_Queries
     protected $userInfo;
 
     /**
-     * @var string
+     * @var array
      */
-    protected $message;
+    protected $messages = array();
 
     public function __construct()
     {
@@ -94,7 +94,7 @@ class Qry_Queries
      */
     public function getSpecificUserInfo($info)
     {
-        return ( is_object($this->userInfo) && array_key_exists($info, $this->userInfo) )
+        return (is_object($this->userInfo) && array_key_exists($info, $this->userInfo))
             ? $this->userInfo->$info
             : null;
     }
@@ -104,15 +104,15 @@ class Qry_Queries
      */
     public function setMessage($message)
     {
-        $this->message .= $message;
+        $this->messages[] = $message;
     }
 
     /**
      * @return string
      */
-    public function getMessage()
+    public function getMessages()
     {
-        return $this->message;
+        return $this->messages;
     }
 
     /**

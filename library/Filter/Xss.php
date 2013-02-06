@@ -13,10 +13,12 @@ class Filter_Xss
      */
     public function filterXss($params, $returnStr = false)
     {
-        $params = ( is_array($params) === true ) ? $params : array($params);
+        $params = (is_array($params) === true)
+                ? $params
+                : array($params);
 
-        foreach($params as $key => $val){
-            if( is_array($val) === true ){
+        foreach ($params as $key => $val) {
+            if (is_array($val) === true) {
                 /**
                  * remove all non-printable characters. CR(0a) and LF(0b) and TAB(9) are allowed
                  * this prevents some character re-spacing such as <java\0script>
@@ -53,30 +55,37 @@ class Filter_Xss
                 /**
                  * now the only remaining whitespace attacks are \t, \n, and \r
                  */
-                $ra1 = array( 'javascript', 'vbscript', 'expression', 'applet', 'meta'  , 'xml'  , 'blink'   , 'link',
-                              'style'     , 'script'  , 'embed'     , 'object', 'iframe', 'frame', 'frameset', 'ilayer',
-                              'layer'     , 'bgsound' , 'title'     , 'base'
+                $ra1 = array(
+                    'javascript', 'vbscript', 'expression', 'applet', 'meta'  , 'xml'  , 'blink'   , 'link',
+                    'style'     , 'script'  , 'embed'     , 'object', 'iframe', 'frame', 'frameset', 'ilayer',
+                    'layer'     , 'bgsound' , 'title'     , 'base'
                 );
-                $ra2 = array( 'onabort'         , 'onactivate'        , 'onafterprint'      , 'onafterupdate'    , 'onbeforeactivate',
-                              'onbeforecopy'    , 'onbeforecut'       , 'onbeforedeactivate', 'onbeforeeditfocus', 'onbeforepaste',
-                              'onbeforeprint'   , 'onbeforeunload'    , 'onbeforeupdate'    , 'onblur'           , 'onbounce',
-                              'oncellchange'    , 'onchange'          , 'onclick'           , 'oncontextmenu'    , 'oncontrolselect',
-                              'oncopy'          , 'oncut'             , 'ondataavailable'   , 'ondatasetchanged' , 'ondatasetcomplete',
-                              'ondblclick'      , 'ondeactivate'      , 'ondrag'            , 'ondragend'        , 'ondragenter',
-                              'ondragleave'     , 'ondragover'        , 'ondragstart'       , 'ondrop'           , 'onerror',
-                              'onerrorupdate'   , 'onfilterchange'    , 'onfinish'          , 'onfocus'          , 'onfocusin',
-                              'onfocusout'      , 'onhelp'            , 'onkeydown'         , 'onkeypress'       , 'onkeyup',
-                              'onlayoutcomplete', 'onload'            , 'onlosecapture'     , 'onmousedown'      , 'onmouseenter',
-                              'onmouseleave'    , 'onmousemove'       , 'onmouseout'        , 'onmouseover'      , 'onmouseup',
-                              'onmousewheel'    , 'onmove'            , 'onmoveend'         , 'onmovestart'      , 'onpaste',
-                              'onpropertychange', 'onreadystatechange', 'onreset'           , 'onresize'         , 'onresizeend',
-                              'onresizestart'   , 'onrowenter'        , 'onrowexit'         , 'onrowsdelete'     , 'onrowsinserted',
-                              'onscroll'        , 'onselect'          , 'onselectionchange' , 'onselectstart'    , 'onstart',
-                              'onstop'          , 'onsubmit'          , 'onunload', );
+                $ra2 = array(
+                    'onabort'         , 'onactivate'        , 'onafterprint'      , 'onafterupdate'    , 'onbeforeactivate',
+                    'onbeforecopy'    , 'onbeforecut'       , 'onbeforedeactivate', 'onbeforeeditfocus', 'onbeforepaste',
+                    'onbeforeprint'   , 'onbeforeunload'    , 'onbeforeupdate'    , 'onblur'           , 'onbounce',
+                    'oncellchange'    , 'onchange'          , 'onclick'           , 'oncontextmenu'    , 'oncontrolselect',
+                    'oncopy'          , 'oncut'             , 'ondataavailable'   , 'ondatasetchanged' , 'ondatasetcomplete',
+                    'ondblclick'      , 'ondeactivate'      , 'ondrag'            , 'ondragend'        , 'ondragenter',
+                    'ondragleave'     , 'ondragover'        , 'ondragstart'       , 'ondrop'           , 'onerror',
+                    'onerrorupdate'   , 'onfilterchange'    , 'onfinish'          , 'onfocus'          , 'onfocusin',
+                    'onfocusout'      , 'onhelp'            , 'onkeydown'         , 'onkeypress'       , 'onkeyup',
+                    'onlayoutcomplete', 'onload'            , 'onlosecapture'     , 'onmousedown'      , 'onmouseenter',
+                    'onmouseleave'    , 'onmousemove'       , 'onmouseout'        , 'onmouseover'      , 'onmouseup',
+                    'onmousewheel'    , 'onmove'            , 'onmoveend'         , 'onmovestart'      , 'onpaste',
+                    'onpropertychange', 'onreadystatechange', 'onreset'           , 'onresize'         , 'onresizeend',
+                    'onresizestart'   , 'onrowenter'        , 'onrowexit'         , 'onrowsdelete'     , 'onrowsinserted',
+                    'onscroll'        , 'onselect'          , 'onselectionchange' , 'onselectstart'    , 'onstart',
+                    'onstop'          , 'onsubmit'          , 'onunload',
+                );
                 $ra = array_merge($ra1, $ra2);
 
-                $found = true; // keep replacing as long as the previous round replaced something
-                while( $found === true ){
+                /**
+                 * Keep replacing as long as the previous round replaced something
+                 */
+                $found = true;
+
+                while ($found === true) {
                     $val_before = $val;
                     for($i = 0; $i < sizeof($ra); $i++){
                         $pattern = '/';
@@ -101,10 +110,15 @@ class Filter_Xss
                     }
                 }
             }
-            $params[$key] = ( is_array($val) === true ) ? $this->filterXss($val) : $val;
+
+            $params[$key] = (is_array($val) === true)
+                          ? $this->filterXss($val)
+                          : $val;
         }
 
-        return ( $returnStr === true ) ? $params[0] : $params;
+        return ($returnStr === true)
+            ? $params[0]
+            : $params;
     }
 
     /**
@@ -122,13 +136,15 @@ class Filter_Xss
          */
         $params = $this->filterXss($params, $returnStr);
 
-        $params = is_array($params) ? $params : array($params);
+        $params = (is_array($params) === true)
+                ? $params
+                : array($params);
 
-        foreach($params as $k => $v){
+        foreach ($params as $k => $v) {
             /**
              * Recursive, re-send all values that are arrays
              */
-            if( is_array($v) === true ){
+            if (is_array($v) === true) {
                 $params[$k] = $this->realEscapeString($v, false, $charset);
                 continue;
             }
@@ -143,6 +159,8 @@ class Filter_Xss
             $params[$k] = trim($params[$k]);
         }
 
-        return ( $returnStr === true ) ? $params[0] : $params;
+        return ($returnStr === true)
+            ? $params[0]
+            : $params;
     }
 }
