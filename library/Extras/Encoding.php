@@ -7,6 +7,7 @@ class Extras_Encoding
      *
      * @param string $data
      * @param string $setEncoding Default: UTF-8//TRANSLIT
+     * @throws BadFunctionCallException
      * @return string
      */
     public static function setEncoding($data, $setEncoding = 'UTF-8//TRANSLIT')
