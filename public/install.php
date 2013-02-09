@@ -31,23 +31,21 @@ try{
     $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
     /**
-     * url: http://stackoverflow.com/questions/1883079/best-practice-import-mysql-file-in-php-split-queries#answers-header
-     *
      * Install what is in $file
+     *
+     * @see http://stackoverflow.com/questions/1883079/best-practice-import-mysql-file-in-php-split-queries#answers-header
      */
     if (is_file($sqlFile) === true) {
         if (($file = fopen($sqlFile, 'r')) !== false) {
             $query = array();
 
             while (feof($file) === false) {
-                $line = fgets($file);
-                $line = trim($line);
+                $line = trim(fgets($file));
 
-                if (preg_match('/^[^--]/', $line) === 1 && preg_match('/^[^\/.+?\/]/', $line) === 1) {
-                    if (empty($line) === false) {
-                        $query[] = $line;
-                    }
+                if (empty($line) === false && preg_match('/^[^--]/', $line) === 1 && preg_match('/^[^\/.+?\/]/', $line) === 1) {
+                    $query[] = $line;
                 }
+
                 if (preg_match('/' . preg_quote($delimiter, '/') . '\s*$/iS', end($query)) === 1) {
                     $dbQuery = trim(implode('', $query));
 
@@ -116,4 +114,7 @@ try{
     exit($err->getMessage());
 }
 
+/**
+ * Redirect to login page
+ */
 header('Location: /');
