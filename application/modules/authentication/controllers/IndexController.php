@@ -40,7 +40,7 @@ class Authentication_IndexController extends Zend_Controller_Action
                 if ($qry->loginQry() === true) {
                     $this->_redirect($requestURL);
                 } else {
-                    $this->view->message = $qry->getMessage();
+                    $this->view->message = implode('', $qry->getMessages());
                 }
             }
         }

@@ -1,5 +1,5 @@
 <?php
-class Application_Plugin_Url extends Zend_Controller_Plugin_Abstract
+class Authentication_Plugin_Url extends Zend_Controller_Plugin_Abstract
 {
     private $router;
     private $db;

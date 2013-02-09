@@ -53,6 +53,14 @@ class Authentication_Bootstrap extends Zend_Application_Module_Bootstrap
     }
 
     /**
+     * Setup routes
+     */
+    protected function _initRoutes()
+    {
+        $this->getResource('front')->registerPlugin(new Authentication_Plugin_Url());
+    }
+
+    /**
      * Zend_Navigation
      */
     protected function _initNavigation()

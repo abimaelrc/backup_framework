@@ -30,8 +30,8 @@ class Qry_Queries
 
     public function __construct()
     {
-        $this->db       = Db_Db::conn();
-        $this->auth     = Zend_Auth::getInstance();
+        $this->db   = Db_Db::conn();
+        $this->auth = Zend_Auth::getInstance();
         $this->auth->setStorage(Extras_Session::storageNamespace());
         $this->userInfo = $this->getUserInfo();
     }
@@ -108,7 +108,7 @@ class Qry_Queries
     }
 
     /**
-     * @return string
+     * @return array
      */
     public function getMessages()
     {

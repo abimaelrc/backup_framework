@@ -62,14 +62,6 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
     }
 
     /**
-     * Setup routes
-     */
-    protected function _initRoutes()
-    {
-        $this->getResource('front')->registerPlugin(new Application_Plugin_Url());
-    }
-
-    /**
      * Setup common helper directory
      */
     protected function _initCommonHelpers()
