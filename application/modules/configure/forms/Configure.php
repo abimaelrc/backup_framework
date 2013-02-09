@@ -41,9 +41,6 @@ class Configure_Form_Configure extends Zend_Form
                  )
              );
 
-
-
-
         /***************************
          *                      addElement
          **************************/
@@ -59,9 +56,6 @@ class Configure_Form_Configure extends Zend_Form
             )
         );
 
-
-
-
         /***************************
          *                      hash
          **************************/
@@ -75,9 +69,6 @@ class Configure_Form_Configure extends Zend_Form
                  )
              );
         $this->addElement($hash);
-
-
-
 
         /***************************
          *                      oldPwd
@@ -98,9 +89,6 @@ class Configure_Form_Configure extends Zend_Form
                ->addValidator(new Configure_Model_Validate_OldPwd());
         $this->addElement($oldPwd);
 
-
-
-
         /***************************
          *                      pwd
          **************************/
@@ -118,9 +106,6 @@ class Configure_Form_Configure extends Zend_Form
             ->addFilter('StringTrim')
             ->addValidator(new Configure_Model_Validate_ConfirmPwd());
         $this->addElement($pwd);
-
-
-
 
         /***************************
          *                      confirmPwd
@@ -140,9 +125,6 @@ class Configure_Form_Configure extends Zend_Form
                    ->addValidator(new Configure_Model_Validate_ConfirmPwd());
         $this->addElement($confirmPwd);
 
-
-
-
         /***************************
          *                      fieldset
          **************************/
@@ -156,11 +138,12 @@ class Configure_Form_Configure extends Zend_Form
             'configureForm'
         );
         $this->getDisplayGroup('configureForm')
-             ->setDecorators( array( 'FormElements',
-                                     array( 'Fieldset', array( 'class'=>'fieldsetDisplayGroupEntireWidth' ) ), ));
-
-
-
+             ->setDecorators(
+                 array(
+                     'FormElements',
+                     array( 'Fieldset', array( 'class'=>'fieldsetDisplayGroupEntireWidth' ) ),
+                 )
+             );
 
         /***************************
          *                      submit

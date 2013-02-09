@@ -8,7 +8,6 @@ class Configure_Model_Queries extends Qry_Queries
     {
         $dbQuery                        = 'SELECT users_id FROM users WHERE num_empl = ' . $this->db->quote($this->chkParam('num_empl'));
         $usersId                        = $this->db->fetchOne($dbQuery);
-
         $post                           = $this->filterXss($this->params, false, true);
         $post['pwd']                    = crypt($post['pwd'], Extras_Config::getOption('salt', 'additionalParams', true));
         $post['change_pwd']             = 1;
@@ -17,6 +16,7 @@ class Configure_Model_Queries extends Qry_Queries
         $post['updated_by']             = $this->getSpecificUserInfo('users_id');
         $post['updated_datetime']       = date('Y-m-d H:i:s');
         $post['updated_by_remote_addr'] = Zend_Controller_Front::getInstance()->getRequest()->getServer('REMOTE_ADDR');
+
         unset($post['hashConfigureUsers']);
 
         $this->db->update('users', $post, 'users_id = ' . $this->db->quote($usersId));
@@ -39,14 +39,17 @@ class Configure_Model_Queries extends Qry_Queries
     public function configureAddUsersQry()
     {
         $post = $this->filterXss($this->params);
+
         unset($post['hashConfigureUsers']);
 
         $dbQuery = 'SELECT COUNT(*) FROM users WHERE num_empl = ' . $this->db->quote($post['num_empl']);
         if ($this->db->fetchOne($dbQuery) > 0) {
             $dbQuery = 'SELECT deleted_account FROM users WHERE num_empl = ' . $this->db->quote($post['num_empl']);
+
             if ($this->db->fetchOne($dbQuery) == 1) {
                 return $this->restoreUserQry();
             }
+
             return false;
         }
 

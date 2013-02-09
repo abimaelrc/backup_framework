@@ -14,10 +14,9 @@ class Notes_IndexController extends Zend_Controller_Action
         $qry  = new Notes_Model_Queries();
         $form = new Notes_Form_Notes();
         $form->setAction($this->view->url(array(), 'notes'));
-        $this->view->form  = $form;
-        $messages          = $this->_helper->FlashMessenger->getMessages();
-        $this->view->notes = $qry->getActiveNotesQry();
-
+        $this->view->form    = $form;
+        $messages            = $this->_helper->FlashMessenger->getMessages();
+        $this->view->notes   = $qry->getActiveNotesQry();
         $this->view->message = (empty($messages[0]) === false)
                              ? $messages[0]
                              : null;
