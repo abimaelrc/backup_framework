@@ -62,31 +62,6 @@ class Statistics_Model_Queries extends Qry_Queries
 
 
     /**
-     * Set encoding
-     *
-     * @param string $data
-     * @param string $setEnding Default: UTF-8//TRANSLIT
-     *
-     * @return string
-     */
-    private function setEncoding($data, $setEncoding = 'UTF-8//TRANSLIT')
-    {
-        $encoding = mb_detect_encoding($data);
-        $encoding = ($encoding !== false)
-                  ? $encoding
-                  : 'ISO-8859-1';
-
-        if (strpos($setEncoding, $encoding) === false) {
-            $data = iconv($encoding, $setEncoding, trim($data));
-        }
-
-        return $data;
-    }
-
-
-
-
-    /**
      * @return array filename & info
      */
     public function indexQry()
@@ -217,7 +192,7 @@ class Statistics_Model_Queries extends Qry_Queries
 
         return array(
             'fileName' => $fileName,
-            'info'     => $this->setEncoding($info, 'ISO-8859-1//TRANSLIT'),
+            'info'     => Extras_Encoding::setEncoding($info, 'ISO-8859-1//TRANSLIT'),
         );
     }
 
