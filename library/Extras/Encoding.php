@@ -9,7 +9,7 @@ class Extras_Encoding
      * @param string $setEncoding Default: UTF-8//TRANSLIT
      * @return string
      */
-    public function setEncoding($data, $setEncoding = 'UTF-8//TRANSLIT')
+    public static function setEncoding($data, $setEncoding = 'UTF-8//TRANSLIT')
     {
         if (function_exists('mb_detect_encoding') === false) {
             throw new BadFunctionCallException('mbstring library is not available');
