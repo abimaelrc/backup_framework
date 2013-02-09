@@ -1,8 +1,20 @@
 <h2>Inicio</h2>
 <div id="notes">
-<?php if(!empty($this->notes)): ?>
-    <?php echo nl2br($this->notes); ?>
+<?php if(empty($this->notes) === false): ?>
+    <div class="notes-content">
+        <?php echo nl2br($this->escape($this->notes['content'])); ?>
+    </div>
+    <div class="notes-bottom">
+        <span class="time" title="<?php echo $this->escape($this->notes['created_datetime']); ?>">
+            <i></i>
+            <?php echo $this->escape($this->notes['altTime']); ?>
+        </span>
+        <span class="created-by">
+            <i></i>
+            <?php echo $this->escape($this->notes['created_by']); ?>
+        </span>
+    </div>
 <?php else: ?>
-    No hay notas
+	No hay notas
 <?php endif; ?>
 </div>

@@ -323,6 +323,29 @@ input.current{
     padding: 3px 5px;
     border: 2px solid #d2e2f0;
 }
+#mainContent #report-info ul{
+    width: 98%;
+    margin: 0 auto;
+}
+#mainContent #report-info li{
+    float: left;
+    width: 50%;
+}
+#mainContent #report-info div{ font-weight: bold; }
+#mainContent #report-info div span{ font-weight: normal; }
+#mainContent .form div{ margin: 2px 0; }
+#mainContent .form div div{ margin: 0; }
+#mainContent div#notes{
+    margin-bottom: 5px;
+    border-right: 1px solid #dddddd;
+    border-bottom: 2px solid #dddddd;
+}
+#mainContent .notes-content{
+    max-height: 300px;
+    overflow: auto;
+    padding: 3px 10px;
+    font-size: 14px;
+}
 #mainContent .notes-bottom{ font-size: 11px; }
 #mainContent .notes-bottom a{ color: #0084B4; }
 #mainContent .notes-bottom span.time i{
@@ -338,33 +361,6 @@ input.current{
     background-position: -240px -30px;
     width: 15px;
     height: 15px;
-}
-#mainContent .notes-content{
-    padding: 3px 10px;
-    font-size: 14px;
-}
-#mainContent #report-info ul{
-    width: 98%;
-    margin: 0 auto;
-}
-#mainContent #report-info li{
-    float: left;
-    width: 50%;
-}
-#mainContent #report-info div{ font-weight: bold; }
-#mainContent #report-info div span{ font-weight: normal; }
-#mainContent .form div{ margin: 2px 0; }
-#mainContent .form div div{ margin: 0; }
-#mainContent div#notes{
-    max-height: 300px;
-    overflow: auto;
-    margin-bottom: 5px;
-    border-right: 1px solid #dddddd;
-    border-bottom: 2px solid #dddddd;
-}
-#mainContent p#notes-description{
-    max-height: 200px;
-    overflow: auto;
 }
 #mainContent div.upload{ margin: 5px 0; }
 #mainContent div#url-back{ z-index: 1000; }
