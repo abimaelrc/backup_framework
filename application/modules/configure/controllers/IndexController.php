@@ -23,7 +23,7 @@ class Configure_IndexController extends Zend_Controller_Action
             )
         );
         $this->view->form    = $form->setAction($this->view->url(array(), 'configure'));
-        $this->view->message = implode('', $this->_helper->getHelper('FlashMessenger')->getMessages());
+        $this->view->message = nl2br(implode(PHP_EOL, $this->_helper->FlashMessenger->getMessages()));
 
         if ($this->getRequest()->isPost() === true) {
             if ($form->isValid($this->getRequest()->getPost()) === true) {

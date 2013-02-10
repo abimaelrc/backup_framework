@@ -13,6 +13,6 @@ class IndexController extends Zend_Controller_Action
     {
         $qry                 = new Default_Model_Queries;
         $this->view->notes   = $qry->indexQry();
-        $this->view->message = implode('', $this->_helper->FlashMessenger->getMessages());
+        $this->view->message = nl2br(implode(PHP_EOL, $this->_helper->FlashMessenger->getMessages()));
     }
 }

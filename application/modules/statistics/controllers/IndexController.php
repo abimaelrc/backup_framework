@@ -24,7 +24,7 @@ class Statistics_IndexController extends Zend_Controller_Action
         unset($values['controller']);
         unset($values['action']);
 
-        $this->view->message   = implode(PHP_EOL, $this->_helper->FlashMessenger->getMessages());
+        $this->view->message   = nl2br(implode(PHP_EOL, $this->_helper->FlashMessenger->getMessages()));
         $this->view->from      = (empty($values['from']) === true || $values['from'] == '0000-00-00') ? null : $values['from'];
         $this->view->to        = (empty($values['to']) === true || $values['to'] == '0000-00-00') ? null : $values['to'];
         $this->view->usersId   = (empty($values['users_id']) === true) ? null : $values['users_id'];
@@ -49,7 +49,7 @@ class Statistics_IndexController extends Zend_Controller_Action
 
                     // $this->_helper->redirector->gotoSimpleAndExit('index', 'index', 'statistics');
                 } else {
-                    $this->view->message .= implode(PHP_EOL, $validate->getMessages());
+                    $this->view->message .= nl2br(implode(PHP_EOL, $validate->getMessages()));
                 }
             }
         }
