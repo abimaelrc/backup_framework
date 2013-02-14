@@ -11,6 +11,7 @@ class Extras_Escape
         $value = urldecode($value);
         $value = html_entity_decode($value);
         $value = strip_tags($value);
+        $value = Extras_Encoding::setEncoding($value);
         $value = htmlentities($value, ENT_QUOTES, $encoding);
         $value = trim($value);
 
