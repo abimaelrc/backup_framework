@@ -7,8 +7,8 @@ class Notes_Model_Queries extends Qry_Queries
     public function indexQry()
     {
         $form = array(
-            'content' => mb_substr($this->chkParam('notes'), 0, 3000, 'UTF-8'),
-            'created_by' => $this->userInfo->users_id,
+            'content'          => mb_substr($this->chkParam('notes'), 0, 3000, 'UTF-8'),
+            'created_by'       => $this->userInfo->users_id,
             'created_datetime' => date('Y-m-d H:i:s')
         );
 
@@ -24,8 +24,8 @@ class Notes_Model_Queries extends Qry_Queries
         }
 
         $formUpdate = array(
-            'active' => 0,
-            'updated_by' => $this->userInfo->users_id,
+            'active'           => 0,
+            'updated_by'       => $this->userInfo->users_id,
             'updated_datetime' => date('Y-m-d H:i:s')
         );
         $this->db->update('notes', $formUpdate, 'active = 1');

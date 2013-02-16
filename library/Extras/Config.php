@@ -105,7 +105,9 @@ class Extras_Config
             $tmp =& $tmp[$key];
         }
 
-        $tmp = (empty($value) === true) ? $key : $value;
+        $tmp = (empty($value) === true)
+             ? $key
+             : $value;
 
         return $result;
     }
