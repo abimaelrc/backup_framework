@@ -25,9 +25,6 @@ class Extras_Headers
         }
     }
 
-
-
-
     /**
      * @source 8 This should work for browsers that are not IE || Opera
      * @param string $fileName
