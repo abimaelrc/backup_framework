@@ -21,7 +21,8 @@ class Extras_Headers
          * IE header
          */
         if (isset($_SERVER['HTTP_USER_AGENT']) === true && (strpos($_SERVER['HTTP_USER_AGENT'], 'MSIE') !== false)) {
-            $fc->setHeader('Content-Type', 'application/force-download');
+            $fc->getResponse()
+               ->setHeader('Content-Type', 'application/force-download');
         }
     }
 
@@ -52,7 +53,8 @@ class Extras_Headers
                 || strpos($_SERVER['HTTP_USER_AGENT'], 'Opera') !== false
             )
         ) {
-            $fc->setHeader('Content-Type', 'application/vnd.ms-excel');
+            $fc->getResponse()
+               ->setHeader('Content-Type', 'application/vnd.ms-excel');
         }
     }
 }
