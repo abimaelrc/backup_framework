@@ -60,6 +60,6 @@ class Authentication_IndexController extends Zend_Controller_Action
         $session->unsetAll();
         Zend_Session::destroy();
 
-        $this->_redirect($this->view->url(array(), 'login'));
+        $this->_helper->redirector->gotoSimpleAndExit('index', 'index', 'authentication');
     }
 }

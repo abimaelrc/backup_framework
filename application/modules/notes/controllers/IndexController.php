@@ -32,7 +32,7 @@ class Notes_IndexController extends Zend_Controller_Action
                     $this->_helper->FlashMessenger('Nota añadida');
                 }
 
-                exit($this->_redirect($this->view->url(array(), 'notes')));
+                $this->_helper->redirector->gotoSimpleAndExit('index', 'index', 'notes');
             }
         }
     }

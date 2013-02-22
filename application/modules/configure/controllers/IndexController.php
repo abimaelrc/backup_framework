@@ -37,7 +37,7 @@ class Configure_IndexController extends Zend_Controller_Action
                 $qry->configureUpdateQry();
 
                 $this->_helper->FlashMessenger('Cuenta editada el ' . date('Y-m-d g:i:s a'));
-                $this->_redirect($this->view->url(array(), 'configure'));
+                $this->_helper->redirector->gotoSimpleAndExit('index', 'index', 'configure');
             }
         }
     }
