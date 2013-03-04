@@ -130,8 +130,8 @@ class Statistics_Model_Queries extends Qry_Queries
          * Set for specific or range dates and times
          */
         $dates     = ( empty($values['to']) === true )
-                   ? (' = ' . $this->db->quote($values['from']))
-                   : (' BETWEEN ' . $this->db->quote($values['from']) . ' AND ' . $this->db->quote($values['to']));
+                   ? (' BETWEEN ' . $this->db->quote($values['from']) . ' AND ' . $this->db->quote($values['from'] . ' 23:59:59'))
+                   : (' BETWEEN ' . $this->db->quote($values['from']) . ' AND ' . $this->db->quote($values['to'] . ' 23:59:59'));
         $timeStart = intval($values['from_hour']);
         $timeEnd   = intval($values['to_hour']);
 
@@ -169,9 +169,9 @@ class Statistics_Model_Queries extends Qry_Queries
             goto skip;
 
             $dbQuery = 'SELECT * FROM table
-                        WHERE DATE_FORMAT(created_datetime, "%Y-%m-%d") ' . $dates
-                              . ' AND DATE_FORMAT(created_datetime, "%H") >= ' . $timeStart
-                              . ' AND DATE_FORMAT(created_datetime, "%H") <= ' . $timeEnd
+                        WHERE created_datetime ' . $dates
+                              . ' AND HOUR(created_datetime) >= ' . $timeStart
+                              . ' AND HOUR(created_datetime) <= ' . $timeEnd
                               . ( !empty($values['users_id']) ? ( ' AND created_by = ' . $this->db->quote($values['users_id']) ) : '' );
             $rows    = $this->db->fetchAll($dbQuery);
             $info    .= $this->getContent(array(), $this->db, $rows);
