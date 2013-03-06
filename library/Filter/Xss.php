@@ -18,7 +18,7 @@ class Filter_Xss
                 : array($params);
 
         foreach ($params as $key => $val) {
-            if (is_array($val) === true) {
+            if (is_array($val) === false) {
                 /**
                  * remove all non-printable characters. CR(0a) and LF(0b) and TAB(9) are allowed
                  * this prevents some character re-spacing such as <java\0script>
