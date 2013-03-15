@@ -62,15 +62,20 @@
 
             <div id="logout"><a href="<?php echo $this->url(array(), "logout"); ?>"><img src="/images/iconClose.png" title="Salir" /></a></div>
 
-            <div class="settings">
-                <img src="/images/setting_normal.png" title="Configuración" />
-                <?php $settingNav = $this->navigation()->findOneByLabel('settings nav'); ?>
+            <?php
+                $settingNav = $this->navigation()->findOneByLabel('settings nav');
+                $settingNav = $this->navigation()->menu()->renderMenu($settingNav);
+                if (empty($settingNav) === false) :
+            ?>
+			<div class="settings">
+				<img src="/images/setting_normal.png" title="Configuración" />
                 <div id="pointer"></div>
-                <div id="settings-info">
-                    <?php echo $this->navigation()->menu()->renderMenu($settingNav); ?>
-                    <div class="clear"></div>
-                </div>
-            </div>
+				<div id="settings-info">
+					<?php echo $settingNav; ?>
+					<div class="clear"></div>
+				</div>
+			</div>
+            <?php endif; ?>
 
             <div class="name-user <?php echo ( $url == $this->url(array(), "configure") ) ? "name-user-hover" : ""; ?>">
                 <a href="/configure"><?php echo Zend_Auth::getInstance()->getStorage()->read()->name; ?></a>
