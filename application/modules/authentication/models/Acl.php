@@ -36,6 +36,7 @@ class Authentication_Model_Acl extends Zend_Acl
                 'authentication',
                 'default',
                 'configure:index:index',
+                'chat',
             )
         );
         $this->deny('user', array('authentication:index:index',));

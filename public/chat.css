@@ -1,0 +1,90 @@
+#chat-main { }
+#chat-tabs {
+    padding-left: 5px;
+}
+#chat-tabs div.tab {
+    position: relative;
+    display: inline-block;
+    background-color: #efefef;
+}
+#chat-tabs div.tab a {
+    padding: 10px;
+    color: #000000;
+    display: inline-block;
+    font-weight: bold;
+}
+#chat-tabs div.tab a:hover {
+    color: #ff0000;
+}
+#chat-tabs div.tab a.selected {
+    background-color: #dddddd;
+}
+#chat-tabs div.tab span.close {
+    position: absolute;
+    top: 0;
+    right: 2px;
+    font-size: 12px;
+    font-weight: bold;
+    cursor: pointer;
+}
+#chat-tabs div.tab span.close:hover {
+    color: #ff0000;
+}
+#chat-content {
+    padding: 5px;
+    height: 400px;
+    overflow: auto;
+}
+#chat-content div {
+    font-family: Georgia;
+    border-left: 1px solid #dddddd;
+    border-bottom: 1px solid #dddddd;
+}
+#chat-content div.even {
+    background-color: #eeeeee;
+    padding: 3px;
+}
+#chat-content div.odd {
+    padding: 3px;
+}
+#chat-content span {
+    color: #336699;
+    font-size: 12px;
+    font-weight: bold;
+    font-family: arial;
+}
+#chat-content p {
+    padding-left: 10px;
+}
+#chat-main textarea {
+    width: 748px;
+    height: 50px;
+    font-weight: bold;
+}
+#chat-main > ul > li {
+    float: left;
+}
+#chat-main li.chat-main {
+    width: 750px;
+}
+#chat-main li.chat-users div#chat-available-users {
+    width: 180px;
+    height: 462px;
+    overflow: auto;
+}
+#chat-main li.chat-users div#chat-available-users > div {
+    display: block;
+    font-size: 12px;
+    font-weight: bold;
+    padding: 4px 3px;
+    border-bottom: 1px solid #cccccc;
+}
+#chat-main li.chat-users div#chat-available-users > div.selected {
+    background-color: #ccffcc;
+}
+#chat-main li.chat-users div#chat-available-users > div:hover {
+    background-color: #ffff96 !important;
+}
+#chat-main .clear {
+    clear: both;
+}

@@ -9,7 +9,7 @@ class Extras_Session
      */
     public static function sessionNamespace(array $options = array(), $sessionExpire = 0, $sessionNamespace = null)
     {
-        Zend_Session::regenerateId();
+        // Zend_Session::regenerateId();
         Zend_Session::start();
 
         $sessionOptions = array();

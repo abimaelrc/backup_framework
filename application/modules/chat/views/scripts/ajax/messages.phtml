@@ -1,0 +1,9 @@
+<?php if (is_array($this->getChatMessages) === true): ?>
+    <?php foreach ($this->getChatMessages as $k => $v): ?>
+        <?php $class = (($k % 2) == 0) ? 'even' : 'odd'; ?>
+        <div class="<?php echo $class; ?>">
+            <span><?php echo $v['created_by']; ?> (<?php echo $v['created_datetime']; ?>):</span>
+            <p><?php echo nl2br($this->escape($v['message'])); ?></p>
+        </div>
+    <?php endforeach; ?>
+<?php endif; ?>

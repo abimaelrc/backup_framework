@@ -20,7 +20,7 @@ $loginName  = 'Administrator';
 $loginUser  = 'admin';
 $loginPass  = 'admin';
 
-$sqlFile    = realpath($basePath . '/docs/test.sql');
+$sqlFile    = realpath($basePath . '/docs/db.sql');
 $delimiter  = ';';
 
 /**
@@ -113,6 +113,8 @@ try{
 } catch(PDOException $err) {
     exit($err->getMessage());
 }
+
+unlink($basePath . '/public/install.php');
 
 /**
  * Redirect to login page

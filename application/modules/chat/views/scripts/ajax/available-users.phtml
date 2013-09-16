@@ -1,0 +1,8 @@
+<?php if (empty($this->availableUsers) === false) : ?>
+    <?php foreach ($this->availableUsers as $k => $v) : ?>
+        <div>
+            <input type="checkbox" name="chat-users[]" id="chat_users_<?php echo $k; ?>" value="<?php echo $v['users_id']; ?>" />
+            <?php echo $v['name']; ?>
+        </div>
+    <?php endforeach; ?>
+<?php endif; ?>

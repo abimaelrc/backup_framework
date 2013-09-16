@@ -9,12 +9,12 @@ function request( url, params, id, async, callback ){
         dataType: 'html',
         async: async,
         success: function( d ){
-            if( id != "" && id != undefined && id != null ){
+            if (id != "" && id != undefined && id != null) {
                 $( "#" + id ).html(d);
             }
 
-            if( typeof callback == 'function' ){
-                callback();
+            if (typeof callback == 'function') {
+                callback(d);
             }
         }
     });

@@ -55,4 +55,20 @@ class Authentication_Model_Queries extends Qry_Queries
 
         return false;
     }
+
+
+
+
+    /**
+     * @return bool
+     */
+    public function currentAuthInfoQry_bck()
+    {
+        $dbQuery = 'SELECT * FROM users
+                    WHERE num_empl = ' . $this->db->quote($this->chkParam('num_empl'))
+                          . ' AND pwd = ' . $this->db->quote($this->chkParam('pwd'));
+        $row     = $this->db->fetchRow($dbQuery);
+
+        return ($row !== false) ? $row : false;
+    }
 }

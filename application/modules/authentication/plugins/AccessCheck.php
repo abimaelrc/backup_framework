@@ -27,6 +27,7 @@ class Authentication_Plugin_AccessCheck extends Zend_Controller_Plugin_Abstract
      */
     public function preDispatch(Zend_Controller_Request_Abstract $request)
     {
+        $userInfo   = false;
         $module     = $request->getModuleName();
         $controller = $request->getControllerName();
         $action     = $request->getActionName();
@@ -41,12 +42,12 @@ class Authentication_Plugin_AccessCheck extends Zend_Controller_Plugin_Abstract
             return;
         }
 
-        if ($this->auth->hasIdentity()) {
-            $qry = new Authentication_Model_Queries;
+        if ($this->auth->hasIdentity() === true) {
+            $qry = new Authentication_Model_Queries();
             $qry->setParams(
                 array(
-                    'num_empl' =>$this->auth->getStorage()->read()->num_empl,
-                    'pwd'      =>$this->auth->getStorage()->read()->pwd
+                    'num_empl' => $this->auth->getStorage()->read()->num_empl,
+                    'pwd'      => $this->auth->getStorage()->read()->pwd
                 )
             );
 
@@ -81,7 +82,7 @@ class Authentication_Plugin_AccessCheck extends Zend_Controller_Plugin_Abstract
             }
 
             if ($this->auth->hasIdentity() === false) {
-                $filter = new Filter_Xss;
+                $filter = new Filter_Xss();
                 $session->requestURL = $filter->realEscapeString($request->getRequestUri(), true);
             }
 

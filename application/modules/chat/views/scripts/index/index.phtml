@@ -1,0 +1,28 @@
+<?php
+$this->headLink()
+    ->appendStylesheet('/chat.css');
+$this->headScript()
+     ->appendFile('/js/chat.js');
+?>
+<h2>Chat</h2>
+<div class="divEntireWidth">
+    <img src="/images/document-view.png" />
+    <div class="title">Chat:</div>
+</div>
+
+<div id="chat-main">
+    <div id="chat-tabs">
+        <div class="tab"><a href="#public" id="public_chat" class="selected">Público</a></div><div class="tab"><a href="#">+</a></div>
+    </div>
+    <ul>
+        <li class="chat-main">
+            <div id="chat-content"></div>
+            <div class="form"><?php echo $this->form; ?></div>
+        </li>
+        <li class="chat-users">
+            <div id="chat-available-users"><?php echo $this->availableUsers; ?></div>
+        </li>
+    </ul>
+
+    <div class="clear"></div>
+</div>
