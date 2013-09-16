@@ -24,5 +24,4 @@ NameVirtualHost localhost:1234
 - Modify variables ```additionalParams``` in file ```/application/configs/application.ini``` with what you want
 - Modify variables in file ```/public/install.php``` with what you want
 - Write in url ```http://<HOST_OR_IP>/install.php```
-- Delete or move ```install.php```
 - Login with user and pass that you set
