@@ -4,8 +4,8 @@ class Statistics_IndexController extends Zend_Controller_Action
 {
     public function init()
     {
-        ini_set('memory_limit','512M');
-        //set_time_limit(300);
+        // ini_set('memory_limit','512M');
+        // set_time_limit(300);
         $this->_helper->layout->setLayout('index');
         $this->view->headTitle()
             ->setSeparator(' - ')
@@ -17,26 +17,32 @@ class Statistics_IndexController extends Zend_Controller_Action
 
     public function indexAction()
     {
-        $qry                   = new Statistics_Model_Queries();
-        $values                = $this->getRequest()->getParams();
+        $values = $this->getRequest()->getParams();
 
         unset($values['module']);
         unset($values['controller']);
         unset($values['action']);
 
-        $this->view->message   = nl2br(implode(PHP_EOL, $this->_helper->FlashMessenger->getMessages()));
-        $this->view->from      = (empty($values['from']) === true || $values['from'] == '0000-00-00') ? null : $values['from'];
-        $this->view->to        = (empty($values['to']) === true || $values['to'] == '0000-00-00') ? null : $values['to'];
-        $this->view->usersId   = (empty($values['users_id']) === true) ? null : $values['users_id'];
+        $qry                   = new Statistics_Model_Queries();
+        $messages              = $this->_helper->FlashMessenger->getMessages();
+        $this->view->message   = implode(PHP_EOL, $messages);
+		$this->view->from      = ($this->getRequest()->getParam('from') == '0000-00-00') ? null : $this->getRequest()->getParam('from');
+		$this->view->to        = ($this->getRequest()->getParam('to') == '0000-00-00') ? null : $this->getRequest()->getParam('to');
+		$this->view->usersId   = $this->getRequest()->getParam('users_id');
+		$this->view->fromHour  = (empty($values['from_hour']) === true) ? 0 : $values['from_hour'];
+		$this->view->toHour    = (empty($values['to_hour']) === true) ? 23 : $values['to_hour'];
         $this->view->employees = $qry->getEmployeesQry();
-        $this->view->fromHour  = (empty($values['from_hour']) === true) ? 0 : $values['from_hour'];
-        $this->view->toHour    = (empty($values['to_hour']) === true) ? 23 : $values['to_hour'];
         $validate              = new Zend_Validate();
         $validate->addValidator(new Statistics_Model_Validate_Validate());
 
-        if ($this->getRequest()->isGet() === true) {
+        /**
+         * Callback demo
+         */
+        //$validate = new Zend_Validate_Callback(new Statistics_Model_Validate_ValidateCallback());
+
+        if ($this->getRequest()->isGet()) {
             if (empty($values) === false) {
-                if ($validate->isValid($values) === true) {
+                if ($validate->isValid($values)) {
                     $this->_helper->layout()->disableLayout();
                     $this->_helper->viewRenderer->setNoRender(true);
 
@@ -46,10 +52,8 @@ class Statistics_IndexController extends Zend_Controller_Action
                     Extras_Headers::csv($values['fileName']);
 
                     $this->getResponse()->setBody($values['info']);
-
-                    // $this->_helper->redirector->gotoSimpleAndExit('index', 'index', 'statistics');
                 } else {
-                    $this->view->message .= nl2br(implode(PHP_EOL, $validate->getMessages()));
+                    $this->view->message .= implode(PHP_EOL, $validate->getMessages());
                 }
             }
         }

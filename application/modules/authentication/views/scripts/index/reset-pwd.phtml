@@ -1,0 +1,13 @@
+<?php 
+    $this->headScript()
+        ->appendScript('$(function() {
+            $( "#pwd" ).focus();
+        });');
+?>
+<div id="wrap-login-form">
+	<div class="logo"><a href="/"><img src="/images/logo-login.png" /></a></div>
+	<div class="form-login"><?php echo $this->form; ?></div>
+	<?php if(empty($this->message) === false): ?>
+		<div class="alert"><?php echo $this->message; ?></div>
+	<?php endif; ?>
+</div>

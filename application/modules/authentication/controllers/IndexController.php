@@ -49,6 +49,65 @@ class Authentication_IndexController extends Zend_Controller_Action
 
 
 
+    public function sendResetPwdAction()
+    {
+        $qry  = new Authentication_Model_Queries();
+        $form = new Authentication_Form_SendResetPwd();
+        $form->setAction('/authentication/index/send-reset-pwd');
+        $this->view->form = $form;
+
+        if ($this->getRequest()->isPost()) {
+            if ($form->isValid($this->getRequest()->getPost())) {
+                $qry->setParams($form->getValues());
+                $qry->sendResetPwdQry();
+                $this->view->message = nl2br(implode(PHP_EOL, $qry->getMessages()));
+            }
+        }
+    }
+
+
+
+
+    public function resetPwdAction()
+    {
+        $qry      = new Authentication_Model_Queries();
+        $tokenPwd = $this->getRequest()->getQuery('token_pwd');
+
+        $qry->setParams(
+            array(
+                'token_pwd' => $tokenPwd,
+            )
+        );
+
+        if (($usersId = $qry->verifyResetTokenPwdQry()) === false) {
+            $this->_helper->redirector->gotoSimpleAndExit('index', 'index', 'authentication');
+        }
+
+        $form = new Authentication_Form_ResetPwd(
+            array(
+                'usersId' => $usersId,
+            )
+        );
+        $form->setAction('/authentication/index/reset-pwd?token_pwd=' . $tokenPwd);
+        $this->view->form    = $form;
+        $this->view->usersId = $usersId;
+
+        if ($this->getRequest()->isPost()) {
+            if ($form->isValid($this->getRequest()->getPost())) {
+                $values              = $form->getValues();
+                $values['token_pwd'] = $tokenPwd;
+                $qry->setParams($values);
+
+                if ($qry->resetPwdQry() === true) {
+                    $this->_helper->redirector->gotoSimpleAndExit('index', 'index', 'default');
+                }
+            }
+        }
+    }
+
+
+
+
     public function logoutAction()
     {
         $this->_helper->layout->disableLayout();
@@ -60,6 +119,6 @@ class Authentication_IndexController extends Zend_Controller_Action
         $session->unsetAll();
         Zend_Session::destroy();
 
-        $this->_helper->redirector->gotoSimpleAndExit('index', 'index', 'authentication');
+        $this->_helper->redirector->gotoSimpleAndExit('index', 'index', 'default');
     }
 }

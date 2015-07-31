@@ -1,0 +1,23 @@
+/***************************
+ *                                 errors
+ **************************/
+.errors{
+    font-size: 12px;
+    color: #ff0000;
+}
+.errors li{ margin-bottom: 3px; }
+.errorsHash{
+    font-size: 12px;
+    color: #ff0000;
+    max-width: 700px;
+}
+.errorsHash ul{ margin-left: 15px; }
+.submit{
+    padding: 3px 10px;
+    font-weight: bold;
+    background-image: url(/images/bckBtn.png);
+    background-position: bottom;
+    background-repeat: repeat-x;
+    border: 1px solid #ffffff;
+}
+#fieldset-sellerMiddleInfo .errors li{ max-width: 170px; }

@@ -22,13 +22,24 @@
 #chat-tabs div.tab span.close {
     position: absolute;
     top: 0;
-    right: 2px;
+    right: 1px;
     font-size: 12px;
     font-weight: bold;
     cursor: pointer;
+    font-family: "Lucida Console", Monaco, monospace;
+    color: #bbbbbb;
+    border: 1px solid #bbbbbb;
+    width: 10px;
+    height: 10px;
+    text-align: center;
+    display: none;
+}
+#chat-tabs div.tab:hover span.close {
+    display: block;
 }
 #chat-tabs div.tab span.close:hover {
     color: #ff0000;
+    border: 1px solid #ff9900;
 }
 #chat-content {
     padding: 5px;

@@ -1,0 +1,10 @@
+/***************************
+ *                                 cancellation
+ **************************/
+#cancellation #checklist label{
+    display: block;
+    width: 410px;
+}
+#cancellation #os_info span{ font-weight: bold; }
+#cancellation p.hint{ width: 419px; }
+#cancellation .displayGroup #fieldset-mainLeftInfo div{ padding-top: 3px; }

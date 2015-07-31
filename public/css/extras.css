@@ -1,0 +1,20 @@
+/***************************
+ *                                 extras
+ **************************/
+.clear{ clear: both; }
+.width200px{ width: 200px; }
+.float-left{ float: left; }
+.float-right{ float: right; }
+.marginTop10px{ margin-top: 10px !important; }
+.marginLeft5px{ margin-left: 5px; }
+.marginLeft20px{ margin-left: 20px; }
+.alignCenter{ text-align: center; }
+.bold{ font-weight: bold; }
+.positionRelative{ position: relative; }
+.defaultProperties{
+    padding: 0 !important;
+    margin: 0 !important;
+}
+.hide{ display: none; }
+.noWrap{ white-space: nowrap; }
+.textAlignLeft{ text-align: left !important; }

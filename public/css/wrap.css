@@ -1,0 +1,45 @@
+/***************************
+ *                                 wrap
+ **************************/
+#wrap{ min-width: 962px; }
+#wrap .form label{
+    font-size: 12px;
+    font-weight: bold;
+    white-space: nowrap;
+}
+
+/***************************
+ *                                 wrap-login
+ **************************/
+#wrap-login{
+    background-image: url(/images/login-decorator.png);
+    background-repeat: repeat-x;
+    background-position: top;
+}
+#wrap-login-form{
+    width: 400px;
+    min-height: 370px;
+    border: 4px solid #cccccc;
+    margin: 0 auto;
+    background-image: url(/images/bckTrans.png);
+}
+#wrap-login-form .logo{
+    width: 100px;
+    margin: 10px auto;
+}
+#wrap-login-form .form{
+    width: 220px;
+    margin: 0 auto;
+}
+#wrap-login-form .title {
+    text-align: center;
+}
+#wrap-login-form .title span {
+    font-weight: bold;
+}
+#wrap-login-form .alert{
+    width: 220px;
+    margin: 10px auto 0;
+    color:red;
+    font-size: 12px;
+}

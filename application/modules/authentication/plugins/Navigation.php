@@ -52,28 +52,16 @@ class Authentication_Plugin_Navigation extends Zend_Controller_Plugin_Abstract
      */
     public function preDispatch(Zend_Controller_Request_Abstract $request)
     {
-        $uriModule     = null;
-        $uriController = null;
-        $uriAction     = null;
-        $resource      = '/' . $request->getModuleName()
-                       . '/' . $request->getControllerName()
-                       . '/' . $request->getActionName();
-        $pages         = new RecursiveIteratorIterator( $this->navigation, RecursiveIteratorIterator::SELF_FIRST );
+        $resource = $request->getModuleName()
+                  . $request->getControllerName();
+        $pages    = new RecursiveIteratorIterator(
+            $this->navigation,
+            RecursiveIteratorIterator::SELF_FIRST
+        );
 
-        foreach($pages as $page){
-            $uriResource = $page->getResource();
-
-            if ( empty($uriResource) === false ) {
-                list($uriModule, $uriController, $uriAction) = explode(':', $uriResource);
-            }
-
-            if (
-                ($this->checkFullPath === true && $page->getHref() == $resource)
-                || ( $this->checkFullPath === false
-                     && empty($uriModule) === false 
-                     && ( $uriModule . $uriController ) == ( $request->getModuleName() . $request->getControllerName() )
-                   )
-            ) {
+        foreach ($pages as $page) {
+            $e = explode('/', $page->getHref());
+            if (empty($e[1]) === false && empty($e[2]) === false && ($e[1] . $e[2]) == $resource) {
                 $page->setActive(true);
                 $page->setClass('current');
                 break;
@@ -81,8 +69,8 @@ class Authentication_Plugin_Navigation extends Zend_Controller_Plugin_Abstract
         }
 
         $role = ( $this->auth->hasIdentity() )
-              ? $this->auth->getIdentity()->role
-              : 'guest';
+            ? $this->auth->getIdentity()->role
+            : 'guest';
 
         $this->view->navigation($this->navigation)
              ->setAcl($this->acl)

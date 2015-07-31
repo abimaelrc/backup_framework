@@ -1,0 +1,49 @@
+/***************************
+ *                                 statistics
+ **************************/
+#statistics, #statistics-mobile{  }
+#statistics a:hover,
+    #statistics-mobile a:hover{
+    color: #ff0000;
+    text-decoration: underline;
+}
+#statistics ul.column li,
+    #statistics-mobile ul.column li{
+    width: 50%;
+    float: left;
+}
+#statistics ul.rows,
+    #statistics-mobile ul.rows{
+    width: 100%;
+    padding-top: 5px;
+}
+#statistics ul.rows li,
+    #statistics-mobile ul.rows li{
+    width: 100%;
+    padding-top: 5px;
+    clear: both;
+}
+#statistics ul.rows li div.description,
+    #statistics-mobile ul.rows li div.description{
+    font-size: 10px;
+    padding-right: 5px;
+}
+
+/***************************
+ *                                 statistics-reports
+ **************************/
+#statistics-reports h3{
+    border-bottom: 1px solid #aaaaaa;
+    color: #666666;
+    font-size: 16px;
+    margin-top: 10px; 
+}
+#statistics-reports table tr th.title{
+    width: 130px !important;
+    text-align: center;
+}
+#statistics-reports table tr td{
+    text-align: center;
+    border-bottom: 1px solid #cccccc;
+    border-right: 1px solid #cccccc;
+}

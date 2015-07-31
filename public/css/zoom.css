@@ -1,0 +1,15 @@
+/***************************
+ *                                 zoom | zoom_content
+ **************************/
+#zoom{ z-index: 1000; }
+#zoom_content table{
+    width: 100%;
+    border-spacing: 0;
+    border-collapse: collapse;
+}
+#zoom_content td.title{
+    font-weight: bold;
+    width: 200px;
+    vertical-align: top;
+}
+#zoom_content td{ border-bottom: 1px solid #eeeeee; }

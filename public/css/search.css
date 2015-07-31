@@ -1,0 +1,75 @@
+/***************************
+ *                                 search
+ **************************/
+#search div{ clear: both; }
+#search div.totalPaginator{
+    float: right;
+    padding-right: 10px;
+}
+#search a{
+    color: #336699;
+    text-decoration: underline;
+    font-weight: bold;
+}
+#search a:hover{ color: #ff0000; }
+#search table.reports,
+    #search table#transfer{ width: 100%; }
+#search table.reports tr.pair,
+    #search table#transfer tr.pair{ background-color: #deedf3; }
+#search table.reports tr.pair:hover,
+    #search table#transfer tr.pair:hover{ background-color: #b3d4e1; }
+#search table.reports tr.odd,
+    #search table#transfer tr.odd{ background-color: #ffffff; }
+#search table.reports tr.odd:hover,
+    #search table#transfer tr.odd:hover{ background-color: #b3d4e1; }
+#search table.reports th,
+    #search table#transfer th{ padding: 0 5px; }
+#search table.reports td,
+    #search table#transfer td{
+    text-align: center;
+    padding: 1px 0;
+}
+#search table.reports td.edit{
+    width: 30px;
+    white-space: nowrap;
+}
+#search table.reports td.edit img.edit-img{
+    width: 25px;
+    height: 25px;
+}
+#search #paginator,
+    #search #paginatorTransfer{
+    font-weight: bold;
+    text-align: center;
+    margin: 0 auto;
+}
+#search #paginator table,
+    #search #paginatorTransfer table{ margin: 0 auto; }
+#search #paginator td,
+    #search #paginatorTransfer td{
+    width: 20px;
+    border: 1px solid #dddddd;
+}
+#search #paginator td:hover,
+    #search #paginatorTransfer td:hover{ border: 1px solid #aaaaaa; }
+#search #paginator td a,
+    #search #paginatorTransfer td a{ padding: 1px 5px; }
+
+#search table.reports .fancyZoomInfo{ }
+
+/***************************
+ *                                 search_data
+ **************************/
+#search_data{
+    width: 685px;
+    margin: 0 auto;
+}
+#search_data #dt li,
+    #search_data #specific_info li{
+    float: left;
+    width: 170px;
+}
+#search_data #dt .submitButton,
+    #search_data #specific_info .submitButton{
+    padding-top: 16px;
+}

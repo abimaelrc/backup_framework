@@ -8,17 +8,15 @@ set_time_limit(0);
  */
 $basePath   = realpath(__DIR__ . '/../');
 $iniFile    = parse_ini_file(realpath($basePath . '/application/configs/application.ini'));
-
 $pdoDsn     = 'mysql:host=localhost;dbname=test';
 $pdoUser    = 'root';
 $pdoPass    = '';
-$pdoOptions = array(
-    PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES UTF8',
-);
-
 $loginName  = 'Administrator';
 $loginUser  = 'admin';
 $loginPass  = 'admin';
+$pdoOptions = array(
+    PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES UTF8',
+);
 
 $sqlFile    = realpath($basePath . '/docs/db.sql');
 $delimiter  = ';';
@@ -67,9 +65,11 @@ try{
                     `name`,
                     `num_empl`,
                     `pwd`,
+                    `email`,
                     `role`,
                     `access`,
                     `change_pwd`,
+                    `token_pwd`,
                     `in_charge`,
                     `created_by`,
                     `created_datetime`,
@@ -90,9 +90,11 @@ try{
                     "' . ucwords(mb_strtolower($loginName)) . '",
                     "' . mb_strtoupper($loginUser) . '",
                     "' . crypt($loginPass, $iniFile['additionalParams.salt']) . '",
+                    null,
                     "admin",
                     null,
                     0,
+                    null,
                     null,
                     1,
                     "' . date('Y-m-d H:i:s') . '",

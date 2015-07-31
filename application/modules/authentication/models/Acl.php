@@ -27,28 +27,37 @@ class Authentication_Model_Acl extends Zend_Acl
             'guest',
             array(
                 'authentication:index:index',
-                'default:error:error',
+                'authentication:index:reset-pwd',
+                'authentication:index:send-reset-pwd',
             )
         );
         $this->allow(
             'user',
             array(
-                'authentication',
                 'default',
+                'authentication',
                 'configure:index:index',
-                'chat',
             )
         );
         $this->deny('user', array('authentication:index:index',));
+
         $this->allow(
             'supervisor', 
             array(
-                'notes',
                 'statistics',
-                'configure',
+                'configure:index:index',
             )
         );
+
         $this->allow('admin');
-        $this->deny('admin', array('authentication:index:index',));
+        /**
+         * Hide guide while is not been use
+         */
+        $this->deny(
+            'admin',
+            array(
+                'authentication:index:index',
+            )
+        );
     }
 }

@@ -11,12 +11,14 @@
                     <title>Inicio</title>
                     <resource>default:index:index</resource>
                 </home>
+                <!-- 
                 <chat>
                     <label>Chat</label>
                     <uri>/chat/index/index</uri>
                     <title>Chat</title>
                     <resource>chat:index:index</resource>
                 </chat>
+                -->
             </pages>
         </mainNav>
 

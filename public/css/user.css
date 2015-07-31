@@ -1,0 +1,26 @@
+/***************************
+ *                                 edit-user
+ **************************/
+#edit-user{ width: 100%; }
+#edit-user img{
+    width: 20px;
+    height: 20px;
+}
+#edit-user tr.title{
+    background-color: #7aa8d4;
+    color: #ffffff;
+}
+#edit-user tr.title:hover{ background-color: #7aa8d4; }
+#edit-user th{ padding: 5px; }
+#edit-user th.edit-erase{ width: 35px;  }
+#edit-user th.name{ width: auto; }
+#edit-user th.role{ width: 130px; }
+#edit-user th.change-pwd{ width: 190px; }
+#edit-user th.block-access{ width: 150px; }
+#edit-user tr.odd{ background-color: #dfeef2; }
+#edit-user tr.even{ background-color: #ffffff; }
+#edit-user tr:hover{ background-color: #a7c5e2; }
+#edit-user td{
+    padding: 5px;
+    text-align: center;
+}

@@ -3,6 +3,8 @@ class Authentication_Form_Login extends Zend_Form
 {
     public function init()
     {
+        $db = Db_Db::conn();
+
         /***************************
          *                      form
          **************************/
@@ -40,7 +42,11 @@ class Authentication_Form_Login extends Zend_Form
          **************************/
         $numEmpl = new Zend_Form_Element_Text('num_empl');
         $numEmpl->setLabel('Número Empleado:')
-                ->setOptions(array('size' => 30))
+                ->setOptions(
+                    array(
+                        'size' => 30
+                    )
+                )
                 ->setRequired(true)
                 ->setDecorators(
                     array(
@@ -61,20 +67,25 @@ class Authentication_Form_Login extends Zend_Form
         /***************************
          *                      pwd
          **************************/
-        $pwd = new Zend_Form_Element_Password('pwd');
-        $pwd->setLabel('Contraseña:')
-            ->setOptions(array( 'size' => 30, ))
-            ->setRequired(true)
-            ->setDecorators(
+		$pwd = new Zend_Form_Element_Password('pwd');
+		$pwd->setLabel('Contraseña:')
+			->setOptions(
                 array(
-                    'Description',
-                    'Errors',
-                    'ViewHelper',
-                    'Label',
+                    'size' => 30
                 )
             )
-            ->addFilter('StripTags')
-            ->addFilter('StringTrim');
+			->setRequired(true)
+            ->setDescription('<a href="/authentication/index/send-reset-pwd" class="forgot-pwd">¿Haz olvidado la contraseña o deseas restaurar cuenta?</a>')
+			->setDecorators(
+				array(
+					'Errors',
+					'ViewHelper',
+					'Label',
+					array('Description', array('escape' => false, 'placement' => 'append')),
+				)
+			)
+			->addFilter('StripTags')
+			->addFilter('StringTrim');
         $this->addElement($pwd);
 
 

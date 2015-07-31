@@ -1,0 +1,91 @@
+/***************************
+ *                                 menu
+ **************************/
+#menu{
+    position: relative;
+    width: 960px;
+    margin: 0 auto;
+    background-color: #627aad;
+    border-top: 1px solid #1d4088;
+    border-left: 1px solid #1d4088;
+    border-right: 1px solid #1d4088;
+    z-index: 1000;
+}
+#menu ul.navigation li{
+    float: left;
+    font-weight: bold;
+}
+#menu ul.navigation li.active,
+    #menu ul.navigation li:hover{ background-color: #6d86b7; }
+#menu ul.navigation li a{
+    float: left;
+    font-size: 14px;
+    font-weight: bold;
+    color: #ffffff;
+    padding: 7px;
+}
+#menu .name-user{
+    position: relative;
+    float: right;
+    padding: 5px;
+    font-weight: bold;
+    right: 3px;
+}
+#menu .name-user-hover{ background-color: #6d86b7; }
+#menu .name-user a{ color: #ffffff; }
+#menu .settings,
+    #menu #logout{
+    text-align: center;
+    position: relative;
+    float: right;
+    height: 30px;
+    width: 25px;
+    right: 2px;
+    cursor: pointer;
+    z-index: 100;
+}
+#menu .settings img{
+    position: relative;
+    width: 15px;
+    height: 15px;
+    top: 7px;
+}
+#menu #logout img{
+    position: relative;
+    width: 14px;
+    height: 12px;
+    top: 9px;
+}
+#menu .settings-hover,
+    #menu .logout-hover{ background-color: #6d86b7; }
+#menu .settings #pointer{
+    display: none;
+    width: 0;
+    height: 0;
+    position: relative;
+    border-left: 8px solid transparent;
+    border-right: 8px solid transparent;
+    border-bottom: 6px solid #1d4088;
+    left: 5px;
+    top: 8px;
+}
+#menu .settings #settings-info{
+    display: none;
+    position: relative;
+    width: 120px;
+    background-color: #627aad !important;
+    border: 1px solid #1d4088;
+    background-color: #ffffff;
+    right: 95px;
+    top: 8px;
+    padding: 5px 0;
+    border-radius: 7px;
+    cursor: default;
+}
+#menu .settings #settings-info ul.navigation li{
+    width: 100%;
+    display: block;
+    background-color: #627aad;
+}
+#menu .settings #settings-info ul.navigation li:hover,
+    #menu .settings #settings-info ul.navigation li.active{ background-color: #6d86b7; }

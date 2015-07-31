@@ -23,38 +23,6 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Table structure for table `chat`
---
-
-CREATE TABLE IF NOT EXISTS `chat` (
-  `chat_id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `message` text NOT NULL,
-  `chat_type` varchar(30) NOT NULL,
-  `created_by` int(11) unsigned NOT NULL,
-  `created_datetime` datetime NOT NULL,
-  PRIMARY KEY (`chat_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `chat_private_users`
---
-
-CREATE TABLE IF NOT EXISTS `chat_private_users` (
-  `chat_private_users_id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `users_id` int(11) unsigned NOT NULL,
-  `chat_type` varchar(30) NOT NULL,
-  `leader` int(11) unsigned NOT NULL DEFAULT '0',
-  `active` int(1) NOT NULL DEFAULT '1',
-  `created_datetime` datetime NOT NULL,
-  `closed_datetime` datetime DEFAULT NULL,
-  PRIMARY KEY (`chat_private_users_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
-
--- --------------------------------------------------------
-
---
 -- Table structure for table `notes`
 --
 
@@ -103,7 +71,7 @@ CREATE TABLE IF NOT EXISTS `urls` (
   KEY `created_datetime` (`created_datetime`),
   KEY `updated_by` (`updated_by`),
   KEY `updated_datetime` (`updated_datetime`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=22 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=16 ;
 
 --
 -- Dumping data for table `urls`
@@ -123,14 +91,8 @@ INSERT INTO `urls` (`urls_id`, `module`, `controller`, `action`, `params`, `alia
 (11, 'notes', 'ajax', 'index', NULL, 'notes-ajax', 10, 1, '2011-07-27 00:00:00', NULL, NULL),
 (12, 'notes', 'ajax', 'set-inactive-notes', NULL, 'notes-ajax-set-inactive-notes', 10, 1, '2011-07-27 00:00:00', NULL, NULL),
 (13, 'statistics', 'index', 'index', 'from_hour/to_hour/from/to/type/users_id', 'statistics', 13, 1, '2012-11-07 14:41:47', NULL, NULL),
-(14, 'chat', 'index', 'index', NULL, 'chat', 14, 1, '2013-08-28 11:04:19', NULL, NULL),
-(15, 'chat', 'ajax', 'index', NULL, 'chat-ajax', 14, 1, '2013-08-28 14:25:19', NULL, NULL),
-(16, 'chat', 'ajax', 'count', NULL, 'chat-ajax-count', 14, 1, '2013-08-28 14:25:41', NULL, NULL),
-(17, 'chat', 'ajax', 'messages', NULL, 'chat-ajax-messages', 14, 1, '2013-08-28 14:33:28', NULL, NULL),
-(18, 'chat', 'ajax', 'add', NULL, 'chat-ajax-add', 14, 1, '2013-08-29 10:35:49', NULL, NULL),
-(19, 'chat', 'ajax', 'available-users', NULL, 'chat-ajax-available-users', 14, 1, '2013-08-29 12:04:15', NULL, NULL),
-(20, 'chat', 'ajax', 'add-private-user', NULL, 'chat-ajax-add-private-user', 14, 1, '2013-09-12 10:20:36', NULL, NULL),
-(21, 'chat', 'ajax', 'close', NULL, 'chat-ajax-close', 14, 1, '2013-09-16 00:00:00', NULL, NULL);
+(14, 'authentication', 'index', 'reset-pwd', NULL, 'authentication-index-reset-pwd', 3, 1, '2015-07-20 00:00:00', NULL, NULL),
+(15, 'authentication', 'index', 'send-reset-pwd', NULL, 'authentication-index-send-reset-pwd', 3, 1, '2015-07-20 00:00:00', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -143,9 +105,11 @@ CREATE TABLE IF NOT EXISTS `users` (
   `name` varchar(100) NOT NULL,
   `num_empl` varchar(10) NOT NULL,
   `pwd` varchar(70) NOT NULL,
+  `email` varchar(100) DEFAULT NULL,
   `role` varchar(30) NOT NULL,
   `access` varchar(250) DEFAULT NULL COMMENT 'json',
   `change_pwd` int(1) NOT NULL DEFAULT '1',
+  `token_pwd` varchar(50) DEFAULT NULL,
   `in_charge` int(11) unsigned DEFAULT NULL,
   `created_by` int(11) unsigned NOT NULL,
   `created_datetime` datetime NOT NULL,
@@ -183,17 +147,7 @@ CREATE TABLE IF NOT EXISTS `users` (
   KEY `deleted_datetime` (`deleted_datetime`),
   KEY `deleted_by_remote_addr` (`deleted_by_remote_addr`),
   KEY `access` (`access`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=5 ;
-
---
--- Dumping data for table `users`
---
-
-INSERT INTO `users` (`users_id`, `name`, `num_empl`, `pwd`, `role`, `access`, `change_pwd`, `in_charge`, `created_by`, `created_datetime`, `created_by_remote_addr`, `block_access`, `block_by`, `block_datetime`, `block_by_remote_addr`, `updated_by`, `updated_datetime`, `updated_by_remote_addr`, `deleted_account`, `deleted_by`, `deleted_datetime`, `deleted_by_remote_addr`) VALUES
-(1, 'Administrator', 'ADMIN', '$2a$10$token4u.com/123456789u05l1pAFM2J.Mz63y8pn0UHMz3.etpSS', 'admin', NULL, 0, NULL, 1, '2013-02-21 16:19:19', '127.0.0.1', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(2, 'Asd Fasdfas', 'ASDFA', '$2a$10$token4u.com/123456789uz3pNREMq23ddKm5vX65kJgkZOKm0O9G', 'user', NULL, 1, NULL, 1, '2013-02-22 10:32:41', '127.0.0.1', 0, NULL, NULL, NULL, 1, '2013-02-22 10:32:47', '127.0.0.1', 1, 1, '2013-02-22 10:32:49', '127.0.0.1'),
-(3, 'Test', 'TEST', '$2a$10$token4u.com/123456789u34bJ6Wp3k0.8qyUT2crAcV3bIXtdkXm', 'user', NULL, 0, NULL, 1, '2013-03-15 14:44:22', '127.0.0.1', 0, NULL, NULL, NULL, 3, '2013-08-28 14:10:21', '127.0.0.1', NULL, NULL, NULL, NULL),
-(4, 'Test Test', 'TEST2', '$2a$10$token4u.com/123456789uz3pNREMq23ddKm5vX65kJgkZOKm0O9G', 'user', NULL, 1, NULL, 1, '2013-08-28 14:13:37', '127.0.0.1', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 

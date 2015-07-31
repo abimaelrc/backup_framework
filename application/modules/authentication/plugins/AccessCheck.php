@@ -47,7 +47,7 @@ class Authentication_Plugin_AccessCheck extends Zend_Controller_Plugin_Abstract
             $qry->setParams(
                 array(
                     'num_empl' => $this->auth->getStorage()->read()->num_empl,
-                    'pwd'      => $this->auth->getStorage()->read()->pwd
+                    'pwd'      => $this->auth->getStorage()->read()->pwd,
                 )
             );
 
